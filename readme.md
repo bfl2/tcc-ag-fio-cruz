@@ -1,0 +1,1 @@
+Repositorio para o tcc sobre o tema de Algoritmos geneticos aplicados ao dataset da fio cruz de cancer de figado
