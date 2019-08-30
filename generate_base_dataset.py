@@ -3,7 +3,7 @@ import numpy as np
 ### Genetic algorithm for generating the 10 SNPs genes and its probability of being in a certain class ###
 
 def trainTestSplit(dataset_features):
-    trainValFrac = 0.66
+    trainValFrac = 0.75
     testFrac = 1 -trainValFrac
     len = dataset_features.shape[0]
     divisionIndex = int(np.floor(trainValFrac*len))
