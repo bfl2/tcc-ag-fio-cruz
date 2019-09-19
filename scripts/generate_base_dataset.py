@@ -58,7 +58,7 @@ def create_new_columns(number_formatted_dataset, column, feature):
     values = SNPs_Values[index]
 
     for value in values:
-        number_formatted_dataset[feature + "=" + value] = (column == value).astype(int)
+        number_formatted_dataset[feature + "=" + value] = (column == value).fillna(0.0).astype(np.int64)
 
     return number_formatted_dataset
 
@@ -67,14 +67,14 @@ def getNumberFormatedDataset():
     pre_formatted_dataset = getFormatedDataset()
     base_len = pre_formatted_dataset.shape[0]
 
-    number_formatted_dataset = pd.DataFrame(index=pre_formatted_dataset.iloc[:, 0])
+    number_formatted_dataset = pd.DataFrame()
+    number_formatted_dataset["ID"] = index=pre_formatted_dataset.iloc[:, 0]
 
     for feature in SNPs:
        number_formatted_dataset = create_new_columns(number_formatted_dataset, pre_formatted_dataset.loc[ : , feature ], feature)
 
-    number_formatted_dataset["IsHCC"] = ( pre_formatted_dataset.loc[ : , "Fibrose 1" ] == "HCC").astype(int)
-
-    print(number_formatted_dataset.head())
+    number_formatted_dataset["Fibrose 1"] = pre_formatted_dataset.loc[ : , "Fibrose 1" ]
+    number_formatted_dataset["IsHCC"] = ( pre_formatted_dataset.loc[ : , "Fibrose 1" ] == "HCC").astype(np.int)
 
     number_formatted_dataset.to_csv(data_path + "base/dataset_integer_base.csv")
     return number_formatted_dataset
@@ -104,8 +104,8 @@ def k_fold_example():
 def main():
 
     print("#### Formatting Dataset:")
-    #formattedDataset = getFormatedDataset()
-    getNumberFormatedDataset()
+    FormattedNumberDataset = getNumberFormatedDataset()
+    print(FormattedNumberDataset)
     print("#### Dataset formatting complete ####")
     return
 
