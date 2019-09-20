@@ -34,12 +34,35 @@ def trainValTestSplit(dataset_features):
     dataset_test = dataset_features.iloc[ divisionIndexVal:, : ]
 
 
-    print(dataset_train)
-    print(dataset_val)
-    print(dataset_test)
+    print(dataset_train.head())
+    print(dataset_val.head())
+    print(dataset_test.head())
 
 
     return dataset_train, dataset_val, dataset_test
+
+def getBalancedDataset(dataset):
+
+    y_feature = "IsHCC"
+    class0Filter = dataset[y_feature] == 0
+    class1Filter = dataset[y_feature] == 1
+
+    datasetClass0 = dataset[class0Filter]
+    datasetClass1 = dataset[class1Filter]
+    print(datasetClass0)
+    print(datasetClass1)
+
+    classRatios = int(len(datasetClass0.index)/len(datasetClass1.index))
+    print("Class ratios:", classRatios)
+    balanceDataset = pd.DataFrame()
+
+    balanceDataset = balanceDataset.append([datasetClass0], ignore_index=True)
+    balanceDataset = balanceDataset.append([datasetClass1]*(classRatios), ignore_index=True)
+    balanceDataset = balanceDataset.sample(frac = 1, random_state=100)
+
+    print(balanceDataset)
+
+    return balanceDataset
 
 def getFormatedDataset():
     base_dataset_path = data_path + "PLANILHA_HCV-RECORTE.csv"
@@ -68,7 +91,7 @@ def getNumberFormatedDataset():
     base_len = pre_formatted_dataset.shape[0]
 
     number_formatted_dataset = pd.DataFrame()
-    number_formatted_dataset["ID"] = index=pre_formatted_dataset.iloc[:, 0]
+    number_formatted_dataset["ID"] = pre_formatted_dataset.iloc[:, 0]
 
     for feature in SNPs:
        number_formatted_dataset = create_new_columns(number_formatted_dataset, pre_formatted_dataset.loc[ : , feature ], feature)
@@ -106,6 +129,8 @@ def main():
     print("#### Formatting Dataset:")
     FormattedNumberDataset = getNumberFormatedDataset()
     print(FormattedNumberDataset)
+    balancedDt = getBalancedDataset(FormattedNumberDataset)
+    balancedDt.to_csv(data_path + "base/dataset_balanced.csv")
     print("#### Dataset formatting complete ####")
     return
 
