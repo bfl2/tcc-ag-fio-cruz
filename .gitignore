@@ -2,3 +2,6 @@
 .git
 /env
 _pycache_
+/scripts/_pycache_/
+*.pyc
+*.pyo
