@@ -15,9 +15,9 @@ data_path = "../data/"
 
 SNPs = ["PTX3 rs1840680","PTX3 rs2305619","MBL -221","IL-10 -1082","IL-10 -819","IL-10 -592","TNF-308","SOD2","MPO C-463T","IL-28b rs12979860"]
 
-Genes_comb = {"AG":["AA", "AG", "GA", "GG"], "AC":["AA", "AC", "CA", "CC"], "XY":["XX", "XY", "YX", "YY"], "CT":["CC", "CT", "TC", "TT"]}
+Genes_comb = {"AG":["AA", "AG", "GG"], "GA":["AA", "GA", "GG"], "CA":["AA", "CA", "CC"], "YX":["XX", "YX", "YY"], "CT":["CC", "CT", "TT"]}
 
-SNPs_Values = [Genes_comb["AG"], Genes_comb["AG"], Genes_comb["XY"], Genes_comb["AG"], Genes_comb["CT"], Genes_comb["AC"], Genes_comb["AG"], Genes_comb["AG"], Genes_comb["AG"], Genes_comb["CT"]]
+SNPs_Values = [Genes_comb["AG"], Genes_comb["AG"], Genes_comb["YX"], Genes_comb["GA"], Genes_comb["CT"], Genes_comb["CA"], Genes_comb["GA"], Genes_comb["GA"], Genes_comb["GA"], Genes_comb["CT"]]
 
 
 def trainValTestSplit(dataset_features):
@@ -33,12 +33,6 @@ def trainValTestSplit(dataset_features):
     dataset_val = dataset_features.iloc[ divisionIndexTrain:divisionIndexVal, : ]
     dataset_test = dataset_features.iloc[ divisionIndexVal:, : ]
 
-
-    print(dataset_train.head())
-    print(dataset_val.head())
-    print(dataset_test.head())
-
-
     return dataset_train, dataset_val, dataset_test
 
 def getBalancedDataset(dataset):
@@ -49,8 +43,6 @@ def getBalancedDataset(dataset):
 
     datasetClass0 = dataset[class0Filter]
     datasetClass1 = dataset[class1Filter]
-    print(datasetClass0)
-    print(datasetClass1)
 
     classRatios = int(len(datasetClass0.index)/len(datasetClass1.index))
     print("Class ratios:", classRatios)
@@ -59,8 +51,6 @@ def getBalancedDataset(dataset):
     balanceDataset = balanceDataset.append([datasetClass0], ignore_index=True)
     balanceDataset = balanceDataset.append([datasetClass1]*(classRatios), ignore_index=True)
     balanceDataset = balanceDataset.sample(frac = 1, random_state=100)
-
-    print(balanceDataset)
 
     return balanceDataset
 
@@ -99,38 +89,22 @@ def getNumberFormatedDataset():
     number_formatted_dataset["Fibrose 1"] = pre_formatted_dataset.loc[ : , "Fibrose 1" ]
     number_formatted_dataset["IsHCC"] = ( pre_formatted_dataset.loc[ : , "Fibrose 1" ] == "HCC").astype(np.int)
 
+    removed_classes = ['F2', 'F3', 'F4']
+    removed_cases = number_formatted_dataset.loc[number_formatted_dataset['Fibrose 1'].isin(removed_classes)]
+
+    number_formatted_dataset.drop(removed_cases.index, inplace=True)
+    number_formatted_dataset = number_formatted_dataset.drop("Fibrose 1", axis = 1)
     number_formatted_dataset.to_csv(data_path + "base/dataset_integer_base.csv")
     return number_formatted_dataset
 
-
-"""
-def k_fold_example():
-    dataset = getFormatedDataset()
-    X = dataset.iloc[ : , 1:11]
-    y = dataset.iloc[ : , 11]
-
-    scores = []
-    best_svr = SVR(kernel='rbf')
-    cv = KFold(n_splits=10, random_state=100, shuffle=False)
-    for train_index, test_index in cv.split(X):
-        print("Train Index: ", train_index, "\n")
-        print("Test Index: ", test_index)
-        X_train, X_test, y_train, y_test = X[train_index, :], X[test_index], y[train_index], y[test_index]
-        y_train = y[train_index]
-        best_svr.fit(X_train, y_train)
-        scores.append(best_svr.score(X_test, y_test))
-
-    cross_val_score(best_svr, X, y, cv=10)
-    return
-"""
 
 def main():
 
     print("#### Formatting Dataset:")
     FormattedNumberDataset = getNumberFormatedDataset()
     print(FormattedNumberDataset)
-    balancedDt = getBalancedDataset(FormattedNumberDataset)
-    balancedDt.to_csv(data_path + "base/dataset_balanced.csv")
+    #balancedDt = getBalancedDataset(FormattedNumberDataset)
+    #balancedDt.to_csv(data_path + "base/dataset_balanced.csv")
     print("#### Dataset formatting complete ####")
     return
 
