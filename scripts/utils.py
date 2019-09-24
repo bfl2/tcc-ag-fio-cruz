@@ -7,7 +7,10 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.svm import SVR
 
 from sklearn import datasets, linear_model
-from sklearn.model_selection import cross_val_score
+
+from sklearn.preprocessing import OneHotEncoder
+
+from pandas import get_dummies
 
 ### Script for formatting dataset into reduced format ###
 
@@ -97,12 +100,39 @@ def getNumberFormatedDataset():
     number_formatted_dataset.to_csv(data_path + "base/dataset_integer_base.csv")
     return number_formatted_dataset
 
+def getOneHotEncodedDataset(pre_formatted_dataset=getFormatedDataset(), write_file=False, remove_extra_classes=True):
+    base_len = pre_formatted_dataset.shape[0]
+    encoded_dataset = pd.DataFrame()
+    encoded_dataset["ID"] = pre_formatted_dataset["ID"]
+    categorical_features = SNPs
+
+    ### One Hot Encoding Dataset
+    for feature in categorical_features:
+        encoded_features = pd.get_dummies(pre_formatted_dataset[feature], dtype=np.int64, prefix=(feature), prefix_sep="=")
+        encoded_dataset = pd.concat([encoded_dataset, encoded_features], axis=1)
+
+    encoded_dataset["IsHCC"] = ( pre_formatted_dataset.loc[ : , "Fibrose 1" ] == "HCC").astype(np.int)
+
+    ### Removing Classes: F2, F3, F4
+    if(remove_extra_classes):
+        encoded_dataset["Fibrose 1"] = pre_formatted_dataset.loc[ : , "Fibrose 1" ]
+        removed_classes = ['F2', 'F3', 'F4']
+        removed_cases = encoded_dataset.loc[encoded_dataset['Fibrose 1'].isin(removed_classes)]
+
+        encoded_dataset.drop(removed_cases.index, inplace=True)
+        encoded_dataset = encoded_dataset.drop("Fibrose 1", axis = 1)
+
+    if(write_file):
+        encoded_dataset.to_csv(data_path + "base/dataset_base_encoded.csv")
+    print(encoded_features)
+    return encoded_dataset
 
 def main():
 
     print("#### Formatting Dataset:")
-    FormattedNumberDataset = getNumberFormatedDataset()
-    print(FormattedNumberDataset)
+    #FormattedNumberDataset = getNumberFormatedDataset()
+    #print(FormattedNumberDataset)
+    getOneHotEncodedDataset(write_file=True)
     #balancedDt = getBalancedDataset(FormattedNumberDataset)
     #balancedDt.to_csv(data_path + "base/dataset_balanced.csv")
     print("#### Dataset formatting complete ####")
