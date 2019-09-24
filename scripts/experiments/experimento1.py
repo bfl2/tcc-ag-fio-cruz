@@ -1,9 +1,16 @@
-from scripts import generate_base_dataset as bdt
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import cross_val_score
 import numpy as np
+import sys
+import os
+path_to_parent = os.path.dirname(os.getcwd())
+
+print(path_to_parent)
+sys.path.append(path_to_parent)
+
+from scripts import utils as bdt
 
 def main():
     dt = bdt.getOneHotEncodedDataset()
