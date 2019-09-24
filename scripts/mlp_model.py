@@ -1,29 +1,24 @@
 
-import generate_base_dataset as bdt
+import utils as bdt
 from sklearn.neural_network import MLPClassifier
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import train_test_split
 
 def main():
-    dt = bdt.getNumberFormatedDataset()
-    dataset = bdt.getBalancedDataset(dt)
+    print("Running MLP model")
+    dt = bdt.getOneHotEncodedDataset(remove_extra_classes=True)
 
-
-    train, val, test =  bdt.trainValTestSplit(dataset)
-
-    X = train.iloc[ : , 1:41 ]
-    y = train.iloc[ : , 42 ]
-
-    X_test = test.iloc[ : , 1:41 ]
-    y_test = test.iloc[ : , 42 ]
-
-    print(X)
-    print(y)
+    X  = dt.iloc[ : , 1:31 ]
+    y = dt.iloc[ : , 31 ]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=100, stratify=y)
 
     clf = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(90, 40), random_state=1)
-    clf.fit(X, y)
+    clf.fit(X_train, y_train)
 
-    print(clf.predict(X_test))
-    print(y_test)
-    print('Accuracy testing : {:.3f}'.format(clf.score(X_test, y_test)))
+    scores = cross_val_score(clf, X_train, y_train, cv=5, scoring='accuracy')
+    print('Accuracy testing : {:.3f} (+-{:.3f})'.format(scores.mean(), scores.std()))
+
+    print("###Finished running MLP model")
 
     return
 

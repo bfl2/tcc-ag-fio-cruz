@@ -1,30 +1,23 @@
-import generate_base_dataset as bdt
+import utils as bdt
 from sklearn import svm
+from sklearn.model_selection import cross_val_score
+from sklearn.model_selection import train_test_split
 
 def main():
-    dt = bdt.getNumberFormatedDataset()
-    dataset = bdt.getBalancedDataset(dt)
+    print("###Running SVM model")
+    dt = bdt.getOneHotEncodedDataset(remove_extra_classes=True)
 
+    X  = dt.iloc[ : , 1:31 ]
+    y = dt.iloc[ : , 31 ]
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=100, stratify=y)
 
-    train, val, test =  bdt.trainValTestSplit(dataset)
-
-    X = train.iloc[ : , 1:41 ]
-    y = train.iloc[ : , 42 ]
-
-    X_test = test.iloc[ : , 1:41 ]
-    y_test = test.iloc[ : , 42 ]
-
-    print(X)
-    print(y)
 
     clf = svm.SVC(gamma='scale', decision_function_shape='ovo', C=1.0, cache_size=200, kernel='rbf')
     clf.fit(X, y)
 
-    #print(clf.predict(X_test))
-    #print(y_test)
-    predict_result_pairs = list(zip(clf.predict(X_test), y_test))
-    print(predict_result_pairs)
-    print('Accuracy testing : {:.3f}'.format(clf.score(X_test, y_test)))
+    scores = cross_val_score(clf, X_train, y_train, cv=5, scoring='accuracy')
+    print('Accuracy testing : {:.3f} (+-{:.3f})'.format(scores.mean(), scores.std()))
+    print("###Finished running SVM model")
 
     return
 
