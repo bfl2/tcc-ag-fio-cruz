@@ -124,7 +124,7 @@ def getOneHotEncodedDataset(pre_formatted_dataset=getFormatedDataset(), write_fi
 
     if(write_file):
         encoded_dataset.to_csv(data_path + "base/dataset_base_encoded.csv")
-    print(encoded_features)
+
     return encoded_dataset
 
 def main():
@@ -137,8 +137,3 @@ def main():
     #balancedDt.to_csv(data_path + "base/dataset_balanced.csv")
     print("#### Dataset formatting complete ####")
     return
-
-
-
-if __name__ == "__main__":
-    main()
