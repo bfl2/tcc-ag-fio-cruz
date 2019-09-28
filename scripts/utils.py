@@ -38,7 +38,17 @@ def trainValTestSplit(dataset_features):
 
     return dataset_train, dataset_val, dataset_test
 
-def getBalancedDataset(dataset):
+def getBalancedDataset(*args):
+    if(len(args) == 1):
+        dataset = getBalancedDatasetFromDt(args[0])
+    elif(len(args) == 2):
+       dataset = getBalancedDatasetXY(args[0], args[1])
+    else:
+       dataset = getBalancedDatasetFromDt(args[0])
+
+    return dataset
+
+def getBalancedDatasetFromDt(dataset):
 
     y_feature = "IsHCC"
     class0Filter = dataset[y_feature] == 0
@@ -53,9 +63,27 @@ def getBalancedDataset(dataset):
 
     balanceDataset = balanceDataset.append([datasetClass0], ignore_index=True)
     balanceDataset = balanceDataset.append([datasetClass1]*(classRatios), ignore_index=True)
-    balanceDataset = balanceDataset.sample(frac = 1, random_state=100)
+    balanceDataset = balanceDataset.sample(frac = 1, random_state=42)
 
     return balanceDataset
+
+def getBalancedDatasetXY(X_columns, y_column):
+    dataset = getDatasetFromXY(X_columns, y_column)
+    dataset = getBalancedDataset(dataset)
+
+    return dataset
+
+def getDatasetFromXY(X_columns, y_column):
+
+    dataset = X_columns.copy()
+    dataset["IsHCC"] = y_column
+
+    return dataset
+
+def getXYFromDataset(dataset):
+    y = dataset["IsHCC"]
+    X = dataset.drop(["IsHCC"])
+    return X, y
 
 def getFormatedDataset():
     base_dataset_path = data_path + "PLANILHA_HCV-RECORTE.csv"
