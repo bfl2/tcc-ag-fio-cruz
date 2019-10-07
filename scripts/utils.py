@@ -9,7 +9,7 @@ from sklearn.svm import SVR
 from sklearn import datasets, linear_model
 
 from sklearn.preprocessing import OneHotEncoder
-
+from sklearn.preprocessing import LabelEncoder
 from pandas import get_dummies
 
 ### Script for formatting dataset into reduced format ###
@@ -48,7 +48,7 @@ def getBalancedDataset(*args):
 
     return dataset
 
-def getBalancedDatasetFromDt(dataset):
+def getBalancedDatasetFromDt(dataset, verbose=False):
 
     y_feature = "IsHCC"
     class0Filter = dataset[y_feature] == 0
@@ -58,7 +58,8 @@ def getBalancedDatasetFromDt(dataset):
     datasetClass1 = dataset[class1Filter]
 
     classRatios = int(len(datasetClass0.index)/len(datasetClass1.index))
-    print("Class ratios:", classRatios)
+    if(verbose):
+        print("Class ratios:", classRatios)
     balanceDataset = pd.DataFrame()
 
     balanceDataset = balanceDataset.append([datasetClass0], ignore_index=True)
@@ -85,14 +86,15 @@ def getXYFromDataset(dataset):
     X = dataset.drop(["IsHCC"])
     return X, y
 
-def getFormatedDataset():
+def getFormatedDataset(write_to_file=False):
     base_dataset_path = data_path + "PLANILHA_HCV-RECORTE.csv"
     base_dataset = pd.read_csv(base_dataset_path)
 
     dataset_features = base_dataset.iloc[:, :16]
     dataset_features = dataset_features.drop(["PACIENTE", "ID.1", "SEXO", "At. Inflam. 1"], axis = 1)
 
-    dataset_features.to_csv(data_path + "base/dataset_base.csv")
+    if(write_to_file):
+        dataset_features.to_csv(data_path + "base/dataset_base.csv")
 
     return dataset_features
 
@@ -128,7 +130,7 @@ def getNumberFormatedDataset():
     number_formatted_dataset.to_csv(data_path + "base/dataset_integer_base.csv")
     return number_formatted_dataset
 
-def getOneHotEncodedDataset(pre_formatted_dataset=getFormatedDataset(), write_file=False, remove_extra_classes=True):
+def getOneHotEncodedDataset(pre_formatted_dataset=getFormatedDataset(), write_to_file=False, remove_extra_classes=False):
     base_len = pre_formatted_dataset.shape[0]
     encoded_dataset = pd.DataFrame()
     encoded_dataset["ID"] = pre_formatted_dataset["ID"]
@@ -139,7 +141,7 @@ def getOneHotEncodedDataset(pre_formatted_dataset=getFormatedDataset(), write_fi
         encoded_features = pd.get_dummies(pre_formatted_dataset[feature], dtype=np.int64, prefix=(feature), prefix_sep="=")
         encoded_dataset = pd.concat([encoded_dataset, encoded_features], axis=1)
 
-    encoded_dataset["IsHCC"] = ( pre_formatted_dataset.loc[ : , "Fibrose 1" ] == "HCC").astype(np.int)
+    encoded_dataset["IsHCC"] = ( pre_formatted_dataset.loc[ : , "Fibrose 1" ] == "HCC").astype(np.int64)
 
     ### Removing Classes: F2, F3, F4
     if(remove_extra_classes):
@@ -150,18 +152,52 @@ def getOneHotEncodedDataset(pre_formatted_dataset=getFormatedDataset(), write_fi
         encoded_dataset.drop(removed_cases.index, inplace=True)
         encoded_dataset = encoded_dataset.drop("Fibrose 1", axis = 1)
 
-    if(write_file):
+    if(write_to_file):
         encoded_dataset.to_csv(data_path + "base/dataset_base_encoded.csv")
 
     return encoded_dataset
 
+def getLabelEncodedDataset(pre_formatted_dataset=getFormatedDataset(), remove_extra_classes=False, write_to_file=False):
+    base_len = pre_formatted_dataset.shape[0]
+    label_encoded_dataset = pd.DataFrame()
+    label_encoded_dataset["ID"] = pre_formatted_dataset["ID"]
+    categorical_features = SNPs
+    le = LabelEncoder()
+    for feature in categorical_features:
+        label_encoded_dataset[feature] = le.fit_transform(pre_formatted_dataset[feature])
+        label_encoded_dataset[feature] = label_encoded_dataset[feature].apply(lambda x: round(((x+1)/3), 3))
+
+     ### remove classes option: F2, F3, F4
+    if(remove_extra_classes):
+        label_encoded_dataset["Fibrose 1"] = pre_formatted_dataset.loc[ : , "Fibrose 1" ]
+        removed_classes = ['F2', 'F3', 'F4']
+        removed_cases = label_encoded_dataset.loc[label_encoded_dataset['Fibrose 1'].isin(removed_classes)]
+
+        label_encoded_dataset.drop(removed_cases.index, inplace=True)
+    ###
+    label_encoded_dataset["IsHCC"] = ( pre_formatted_dataset.loc[ : , "Fibrose 1" ] == "HCC").astype(np.int)
+
+    if(write_to_file):
+        label_encoded_dataset.to_csv(data_path + "base/dataset_base_label_encoded.csv")
+
+    return label_encoded_dataset
+
+
+def getFilteredDataset(genes, source_dataset=getLabelEncodedDataset()):
+    filtered_dataset = source_dataset
+    index = 0
+    if(len(genes) > len(SNPs)):
+        print("Error: Passing filter larger than SNPs list")
+
+    for gene in genes:
+        if(gene == 0):
+            filtered_dataset = filtered_dataset.drop(SNPs[index], axis=1)
+        index+=1
+    return filtered_dataset
+
 def main():
 
     print("#### Formatting Dataset:")
-    #FormattedNumberDataset = getNumberFormatedDataset()
-    #print(FormattedNumberDataset)
-    getOneHotEncodedDataset(write_file=True)
-    #balancedDt = getBalancedDataset(FormattedNumberDataset)
-    #balancedDt.to_csv(data_path + "base/dataset_balanced.csv")
+    print( getLabelEncodedDataset(write_to_file=True))
     print("#### Dataset formatting complete ####")
     return
