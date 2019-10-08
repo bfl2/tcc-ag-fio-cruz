@@ -44,7 +44,8 @@ class Population:
     """ Class constants """
 
     def __init__(self):
-        self.popSize = 100
+        self.popSize = 10
+        self.elite_frac = 0.2
         self.indivs = []
         self.avg_fitness = 0
         self.max_fitness = 0
@@ -61,5 +62,24 @@ class Population:
     def printPopulation(self):
         for indiv in self.indivs:
             print("Index:{} Genes:{} Fitness:{}".format(self.indivs.index(indiv), indiv.genes, indiv.fitness) )
+
+        return
+
+    def sortPopulation(self):
+        self.indivs.sort(key=lambda x: x.fitness, reverse=True)
+        return
+
+    def calculateMetrics(self):
+        self.sortPopulation()
+        if(len(self.indivs) > 0):
+            self.max_fitness = self.indivs[0].fitness
+            sum = sum(indiv.fitness for indiv in self.indivs)
+            self.avg_fitness = sum/len(self.indivs)
+        else:
+            print("Error: Population is empty")
+
+        return
+
+    def selection(self):
 
         return
