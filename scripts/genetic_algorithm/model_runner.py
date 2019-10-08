@@ -57,6 +57,9 @@ def getClassifier(model):
         classifier = GradientBoostingClassifier(n_estimators=100, learning_rate=0.5, max_depth=3, random_state=42)
     elif(model == "random_forest"):
         classifier = RandomForestClassifier(n_estimators=100, max_depth=2, random_state=42)
+    else:
+        classifier = RandomForestClassifier(n_estimators=100, max_depth=2, random_state=42)
+
 
     return classifier
 
