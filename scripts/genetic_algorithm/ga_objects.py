@@ -26,10 +26,10 @@ class Individual:
             else:
                 value = 1
             self.genes.append(value)
-        return
+        return self
 
     def getDefaultParameters(self):
-        parameters = {"model":"random_forest", "metric":"auc_roc", "dataset_scope_reduced":False, "verbose":False}
+        parameters = {"model":"gradient_boosting", "metric":"auc_roc", "dataset_scope_reduced":False, "verbose":False, "additional_metrics":False}
         return parameters
 
     def computeFitness(self):
@@ -128,8 +128,6 @@ class Population:
             print("Error: Population is empty")
 
         return
-
-
 
     def tournamentSelection(self, participants, selection_size):
         round_size = 5

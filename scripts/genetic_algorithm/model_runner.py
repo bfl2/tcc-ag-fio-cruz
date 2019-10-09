@@ -25,32 +25,60 @@ import plot_utils
 ## Global Variables
 metric = "roc_auc"
 
+def printAdditionalMetrics(scores, indiv):
+    accuracy = []
+    balanced_accuracy = []
+    auc_roc = []
+    for score in scores:
+        accuracy.append(score[0])
+        balanced_accuracy.append(score[1])
+        auc_roc.append(score[2])
+
+    accuracy = np.array(accuracy)
+    balanced_accuracy = np.array(balanced_accuracy)
+    auc_roc = np.array(auc_roc)
+
+    print("Model:{} ".format(indiv.parameters["model"]))
+    print("Features:{} | {}".format(utils.getFeaturesTextFromGenes(indiv.genes), indiv.genes))
+    print("Accuracy:{:.3f} (+-{:.3f})".format(accuracy.mean(), accuracy.std()))
+    print("Balanced Accuracy:{:.3f} (+-{:.3f})".format(balanced_accuracy.mean(), balanced_accuracy.std()))
+    print("AUC ROC:{:.3f} (+-{:.3f})".format(auc_roc.mean(), auc_roc.std()))
+
+    return
+
 def getIndivDataset(individual):
     indiv_dataset = utils.getFilteredDataset(individual.genes)
 
     return indiv_dataset
 
-def getScore(y_test, y_pred, scoring=metric):
+def getScore(y_test, y_pred, scoring=metric, additional_metrics=False):
+    score = []
+    if(additional_metrics):
+        score.append(accuracy_score(y_test, y_pred, normalize=True))
+        score.append(balanced_accuracy_score(y_test, y_pred))
+        score.append(roc_auc_score(y_test, y_pred))
 
-    if (scoring == "accuracy"):
-        score = accuracy_score(y_test, y_pred, normalize=True)
-    elif (scoring == "balanced_accuracy"):
-        score = balanced_accuracy_score(y_test, y_pred)
-    elif (scoring == "roc_auc"):
-        score = roc_auc_score(y_test, y_pred)
+    else:
+        if (scoring == "accuracy"):
+            score = accuracy_score(y_test, y_pred, normalize=True)
+        elif (scoring == "balanced_accuracy"):
+            score = balanced_accuracy_score(y_test, y_pred)
+        elif (scoring == "roc_auc"):
+            score = roc_auc_score(y_test, y_pred)
+
     return score
 
 
 def runConfiguration(individual):
 
     classifier = getClassifier(individual.parameters['model'])
-    score = runModel(individual, classifier, individual.parameters["verbose"])
+    score = runModel(individual, classifier, individual.parameters["verbose"], additional_metrics=individual.parameters["additional_metrics"])
 
     return score
 
 def getClassifier(model):
     if(model == "svm"):
-        classifier = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(90, 40), random_state=1)
+        classifier = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(90, 40), random_state=42)
     elif(model == "mlp"):
         classifier = svm.SVC(gamma='scale', decision_function_shape='ovo', C=1.0, cache_size=200, kernel='rbf')
     elif(model == "gradient_boosting"):
@@ -60,10 +88,9 @@ def getClassifier(model):
     else:
         classifier = RandomForestClassifier(n_estimators=100, max_depth=2, random_state=42)
 
-
     return classifier
 
-def runModel(individual, classifier, verbose=False):
+def runModel(individual, classifier, verbose=False, additional_metrics=False):
     dataset = getIndivDataset(individual)
     X = dataset.iloc[ : , 1:-1] #removing ID column
     y = dataset.iloc[ : , -1:]
@@ -85,19 +112,19 @@ def runModel(individual, classifier, verbose=False):
 
         y_pred = classifier.predict(X_test)
 
-        score = getScore(y_test, y_pred)
+        score = getScore(y_test, y_pred, additional_metrics=additional_metrics)
         scores.append(score)
         conf_matrix = confusion_matrix(y_test, y_pred)
         conf_matrixes.append(conf_matrix)
 
-    scores = np.array(scores)
-    conf_matrixes = np.array(conf_matrixes)
-    if(verbose):
-        print("Model:{} | Metric:{}\nScore:{:.3f} (+-{:.3f})".format(individual.parameters['model'], metric, scores.mean(), scores.std()))
+    if(additional_metrics):
+        printAdditionalMetrics(scores, individual)
         plot_utils.printConfusionMatrix(conf_matrixes)
-
-    return round(scores.mean(), 4)
-
-
-
-
+        return
+    else:
+        scores = np.array(scores)
+        conf_matrixes = np.array(conf_matrixes)
+        if(verbose):
+            print("Model:{} | Metric:{}\nScore:{:.3f} (+-{:.3f})".format(individual.parameters['model'], metric, scores.mean(), scores.std()))
+            plot_utils.printConfusionMatrix(conf_matrixes)
+        return round(scores.mean(), 4)

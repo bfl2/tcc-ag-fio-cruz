@@ -2,11 +2,30 @@ from ga_objects import Individual
 from ga_objects import Population
 import model_runner
 
+def runAdditionalMethods(indiv):
+
+    indiv.parameters["verbose"] = True
+    indiv.parameters["additional_metrics"] = True
+    model_runner.runConfiguration(indiv)
+
+    return
+
+def runSampleIndiv():
+
+    genes = [0,0,0,0,0,1,0,1,0,0]
+    indiv = Individual()
+    indiv.generateRandomIndiv()
+    indiv.parameters["verbose"] = True
+    indiv.parameters["additional_metrics"] = True
+    model_runner.runConfiguration(indiv)
+
+    return
 
 def main():
 
     stop_condition = False
-    gens_without_improvement_limit = 4
+    GENS_WITHOUT_IMPROVEMENT = 4
+    GENS_LIMIT = 10
 
     generations = []
     population = Population()
@@ -16,7 +35,7 @@ def main():
     gens_without_improvement = 0
 
     while(not stop_condition):
-
+        print("Generation {}".format(len(generations)))
         ##Select Parents
         population.parentSelection()
         ##Generate Children
@@ -30,7 +49,7 @@ def main():
 
         generations.append(population)
 
-        if(gens_without_improvement > gens_without_improvement_limit or len(generations) > 10):
+        if(gens_without_improvement > GENS_WITHOUT_IMPROVEMENT or len(generations) > GENS_LIMIT):
             stop_condition = True
 
 
@@ -40,11 +59,11 @@ def main():
 
     print("### Running Best Indiv simulation:")
     best_indiv = generations[-1].indivs[0]
-    best_indiv.parameters["verbose"] = True
-    model_runner.runConfiguration(best_indiv)
+    runAdditionalMethods(best_indiv)
 
 if __name__ == "__main__":
     print("### Running Genetic Algorithm")
     main()
+    ##runSampleIndiv()
     print("### Finished Running Genetic Algorithm")
 
