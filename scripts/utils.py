@@ -195,6 +195,16 @@ def getFilteredDataset(genes, source_dataset=getLabelEncodedDataset()):
         index+=1
     return filtered_dataset
 
+def getFeaturesTextFromGenes(genes):
+    features = []
+    i = 0
+    for gene in genes:
+        if(gene == 1):
+            features.append(SNPs[i])
+        i += 1
+
+    return features
+
 def main():
 
     print("#### Formatting Dataset:")
