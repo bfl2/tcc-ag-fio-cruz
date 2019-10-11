@@ -12,6 +12,8 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import LabelEncoder
 from pandas import get_dummies
 
+from imblearn.over_sampling import RandomOverSampler
+
 ### Script for formatting dataset into reduced format ###
 
 data_path = "../data/"
@@ -48,6 +50,11 @@ def getBalancedDataset(*args):
 
     return dataset
 
+def getBalancedDatasetROS(X, y):
+    ros = RandomOverSampler(random_state=42)
+    X_res, y_res = ros.fit_resample(X, y)
+    return X_res, y_res
+
 def getBalancedDatasetFromDt(dataset, verbose=False):
 
     y_feature = "IsHCC"
@@ -58,13 +65,18 @@ def getBalancedDatasetFromDt(dataset, verbose=False):
     datasetClass1 = dataset[class1Filter]
 
     classRatios = int(len(datasetClass0.index)/len(datasetClass1.index))
+    invClassRatios = int(len(datasetClass1.index)/len(datasetClass0.index))
     if(verbose):
-        print("Class ratios:", classRatios)
+        print("Class ratios:", classRatios, "Inverse Class ratios:", invClassRatios)
     balanceDataset = pd.DataFrame()
-
-    balanceDataset = balanceDataset.append([datasetClass0], ignore_index=True)
-    balanceDataset = balanceDataset.append([datasetClass1]*(classRatios), ignore_index=True)
-    balanceDataset = balanceDataset.sample(frac = 1, random_state=42)
+    if(classRatios > 0):
+        balanceDataset = balanceDataset.append([datasetClass0], ignore_index=True)
+        balanceDataset = balanceDataset.append([datasetClass1]*(classRatios), ignore_index=True)
+        balanceDataset = balanceDataset.sample(frac = 1, random_state=42)
+    else:
+        balanceDataset = balanceDataset.append([datasetClass0]*(invClassRatios), ignore_index=True)
+        balanceDataset = balanceDataset.append([datasetClass1], ignore_index=True)
+        balanceDataset = balanceDataset.sample(frac = 1, random_state=42)
 
     return balanceDataset
 
@@ -157,7 +169,31 @@ def getOneHotEncodedDataset(pre_formatted_dataset=getFormatedDataset(), write_to
 
     return encoded_dataset
 
-def getLabelEncodedDataset(pre_formatted_dataset=getFormatedDataset(), remove_extra_classes=False, write_to_file=False):
+def generateTargetColumn(label_encoded_dataset, pre_formatted_dataset, classes_config):
+
+    label_encoded_dataset["Fibrose 1"] = pre_formatted_dataset.loc[ : , "Fibrose 1" ]
+    ### Remove F2-F4 classes config
+    ### Standard - F0, F1, F2, F3, F4 X HCC | 0 X 1
+    if(classes_config == "standard"):
+        label_encoded_dataset["IsHCC"] = ( pre_formatted_dataset.loc[ : , "Fibrose 1" ] == "HCC").astype(np.int)
+    elif(classes_config == "F4XHCC"):
+        removed_classes = ['F0', 'F1', 'F2', 'F3']
+        removed_cases = label_encoded_dataset.loc[label_encoded_dataset['Fibrose 1'].isin(removed_classes)]
+        label_encoded_dataset.drop(removed_cases.index, inplace=True)
+        label_encoded_dataset["IsHCC"] = ( pre_formatted_dataset.loc[ : , "Fibrose 1" ] == "HCC").astype(np.int)
+    elif(classes_config == "F0,F1,F2,F3XHCC"):
+        removed_classes = ['F4']
+        removed_cases = label_encoded_dataset.loc[label_encoded_dataset['Fibrose 1'].isin(removed_classes)]
+        label_encoded_dataset.drop(removed_cases.index, inplace=True)
+        label_encoded_dataset["IsHCC"] = ( pre_formatted_dataset.loc[ : , "Fibrose 1" ] == "HCC").astype(np.int)
+    elif(classes_config == "F0,F1,F2,F3XF4,HCC"):
+        target_1_class = ["HCC", "F4"]
+        label_encoded_dataset["IsHCC"] = label_encoded_dataset['Fibrose 1'].apply(lambda i: 1 if i in target_1_class else 0)
+
+    label_encoded_dataset = label_encoded_dataset.drop("Fibrose 1", axis = 1)
+    return label_encoded_dataset
+
+def getLabelEncodedDataset(pre_formatted_dataset=getFormatedDataset(), classes_config="standard", write_to_file=False):
     base_len = pre_formatted_dataset.shape[0]
     label_encoded_dataset = pd.DataFrame()
     label_encoded_dataset["ID"] = pre_formatted_dataset["ID"]
@@ -167,15 +203,9 @@ def getLabelEncodedDataset(pre_formatted_dataset=getFormatedDataset(), remove_ex
         label_encoded_dataset[feature] = le.fit_transform(pre_formatted_dataset[feature])
         label_encoded_dataset[feature] = label_encoded_dataset[feature].apply(lambda x: round(((x+1)/3), 3))
 
-     ### remove classes option: F2, F3, F4
-    if(remove_extra_classes):
-        label_encoded_dataset["Fibrose 1"] = pre_formatted_dataset.loc[ : , "Fibrose 1" ]
-        removed_classes = ['F2', 'F3', 'F4']
-        removed_cases = label_encoded_dataset.loc[label_encoded_dataset['Fibrose 1'].isin(removed_classes)]
-
-        label_encoded_dataset.drop(removed_cases.index, inplace=True)
+     ### Creating isHCC target column based on classesConfig
+    label_encoded_dataset = generateTargetColumn(label_encoded_dataset, pre_formatted_dataset, classes_config)
     ###
-    label_encoded_dataset["IsHCC"] = ( pre_formatted_dataset.loc[ : , "Fibrose 1" ] == "HCC").astype(np.int)
 
     if(write_to_file):
         label_encoded_dataset.to_csv(data_path + "base/dataset_base_label_encoded.csv")
@@ -183,8 +213,8 @@ def getLabelEncodedDataset(pre_formatted_dataset=getFormatedDataset(), remove_ex
     return label_encoded_dataset
 
 
-def getFilteredDataset(genes, source_dataset=getLabelEncodedDataset()):
-    filtered_dataset = source_dataset
+def getFilteredDataset(genes, classes_config="standard"):
+    filtered_dataset = getLabelEncodedDataset(classes_config=classes_config)
     index = 0
     if(len(genes) > len(SNPs)):
         print("Error: Passing filter larger than SNPs list")
