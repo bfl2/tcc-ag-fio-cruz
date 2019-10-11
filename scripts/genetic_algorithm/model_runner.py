@@ -22,6 +22,11 @@ sys.path.append(path_to_parent2)
 from scripts import utils
 import plot_utils
 
+## Disabling DataConversion Warning
+import warnings
+from sklearn.exceptions import DataConversionWarning
+warnings.filterwarnings(action='ignore', category=DataConversionWarning)
+
 ## Global Variables
 metric = "roc_auc"
 
@@ -47,7 +52,8 @@ def printAdditionalMetrics(scores, indiv):
     return
 
 def getIndivDataset(individual):
-    indiv_dataset = utils.getFilteredDataset(individual.genes)
+
+    indiv_dataset = utils.getFilteredDataset(individual.genes, classes_config=individual.parameters["classes_config"])
 
     return indiv_dataset
 
@@ -102,10 +108,15 @@ def runModel(individual, classifier, verbose=False, additional_metrics=False):
         if(verbose):
             print("TRAIN-SIZE:", len(train_index), "TEST-SIZE:", len(test_index))
 
+        X_train, y_train = utils.getBalancedDatasetROS(X.iloc[train_index], y.iloc[train_index])
+        """
         train = utils.getBalancedDataset(X.iloc[train_index], y.iloc[train_index])
         X_train  = train.iloc[ : , :-1 ]
         y_train = train.iloc[ : , -1]
+        """
 
+        if(verbose):
+            print("Class balance:0|1 - {}|{}".format(  (y_train == 0).sum(), (y_train == 1).sum()))
         X_test, y_test = X.iloc[test_index], y.iloc[test_index]
 
         classifier.fit(X_train, y_train)
@@ -119,12 +130,12 @@ def runModel(individual, classifier, verbose=False, additional_metrics=False):
 
     if(additional_metrics):
         printAdditionalMetrics(scores, individual)
-        plot_utils.printConfusionMatrix(conf_matrixes)
+        plot_utils.printConfusionMatrix(conf_matrixes, plot_matrix=True)
         return
     else:
         scores = np.array(scores)
         conf_matrixes = np.array(conf_matrixes)
         if(verbose):
             print("Model:{} | Metric:{}\nScore:{:.3f} (+-{:.3f})".format(individual.parameters['model'], metric, scores.mean(), scores.std()))
-            plot_utils.printConfusionMatrix(conf_matrixes)
+            plot_utils.printConfusionMatrix(conf_matrixes, plot_matrix=True)
         return round(scores.mean(), 4)
