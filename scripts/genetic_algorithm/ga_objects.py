@@ -29,7 +29,7 @@ class Individual:
         return self
 
     def getDefaultParameters(self):
-        parameters = {"model":"gradient_boosting", "metric":"auc_roc", "dataset_scope_reduced":False, "verbose":False, "additional_metrics":False}
+        parameters = {"classes_config":"F0,F1,F2,F3XF4,HCC", "model":"random_forest", "metric":"auc_roc", "dataset_scope_reduced":False, "verbose":False, "additional_metrics":False}
         return parameters
 
     def computeFitness(self):
@@ -130,14 +130,14 @@ class Population:
         return
 
     def tournamentSelection(self, participants, selection_size):
-        round_size = 5
-        round_winners_size = 2
+        ROUND_SIZE = 5
+        ROUND_WINNERS_SIZE = 2
         tournament_winners = []
         while(len(tournament_winners) < selection_size):
 
-            round_participants = random.sample(participants, round_size)
+            round_participants = random.sample(participants, ROUND_SIZE)
             round_participants.sort(key=lambda x: x.fitness, reverse=True)
-            round_winners = round_participants[:round_winners_size]
+            round_winners = round_participants[:ROUND_WINNERS_SIZE]
             tournament_winners.extend(round_winners)
 
         return tournament_winners
@@ -166,6 +166,7 @@ class Population:
     def generateChildren(self):
 
         offspring = []
+        offspring.append(self.next_pop_parents[0])
         while( len(offspring) < self.offspring_size):
             parent1, parent2 = self.getParents()
             seed = random.random()

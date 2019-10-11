@@ -24,8 +24,9 @@ def runSampleIndiv():
 def main():
 
     stop_condition = False
-    GENS_WITHOUT_IMPROVEMENT = 4
-    GENS_LIMIT = 10
+    verbose = True
+    GENS_WITHOUT_IMPROVEMENT = 20
+    GENS_LIMIT = 60
 
     generations = []
     population = Population()
@@ -52,6 +53,8 @@ def main():
         if(gens_without_improvement > GENS_WITHOUT_IMPROVEMENT or len(generations) > GENS_LIMIT):
             stop_condition = True
 
+        if(verbose):
+            population.printPopulation(len(generations) - 1)
 
     for gen in generations:
         gen.printPopulation(generations.index(gen))
