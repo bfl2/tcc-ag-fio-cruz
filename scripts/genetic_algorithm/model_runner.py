@@ -83,9 +83,9 @@ def runConfiguration(individual):
     return score
 
 def getClassifier(model):
-    if(model == "svm"):
+    if(model == "mlp"):
         classifier = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(90, 40), random_state=42)
-    elif(model == "mlp"):
+    elif(model == "svm"):
         classifier = svm.SVC(gamma='scale', decision_function_shape='ovo', C=1.0, cache_size=200, kernel='rbf')
     elif(model == "gradient_boosting"):
         classifier = GradientBoostingClassifier(n_estimators=100, learning_rate=0.5, max_depth=3, random_state=42)
