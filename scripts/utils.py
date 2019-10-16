@@ -189,6 +189,8 @@ def generateTargetColumn(label_encoded_dataset, pre_formatted_dataset, classes_c
     elif(classes_config == "F0,F1,F2,F3XF4,HCC"):
         target_1_class = ["HCC", "F4"]
         label_encoded_dataset["IsHCC"] = label_encoded_dataset['Fibrose 1'].apply(lambda i: 1 if i in target_1_class else 0)
+    else:
+        label_encoded_dataset["IsHCC"] = ( pre_formatted_dataset.loc[ : , "Fibrose 1" ] == "HCC").astype(np.int)
 
     label_encoded_dataset = label_encoded_dataset.drop("Fibrose 1", axis = 1)
     return label_encoded_dataset
@@ -234,6 +236,20 @@ def getFeaturesTextFromGenes(genes):
         i += 1
 
     return features
+
+def convertOneClassResullts(y_pred):
+    i = 0
+    for e in y_pred:
+        if(e == -1):
+            y_pred[i] = 0
+        i += 1
+    return y_pred
+
+def getOneClassDataset(X, y):
+    y_filt = y.loc[y['IsHCC']==0]
+    y_one = y.drop(y_filt.index)
+    X_one = X.drop(y_filt.index)
+    return X_one, y_one
 
 def main():
 

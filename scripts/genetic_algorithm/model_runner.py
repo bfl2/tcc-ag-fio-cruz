@@ -2,6 +2,7 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn import svm
+from sklearn.svm import OneClassSVM
 
 from sklearn.model_selection import KFold
 import numpy as np
@@ -91,6 +92,8 @@ def getClassifier(model):
         classifier = GradientBoostingClassifier(n_estimators=100, learning_rate=0.5, max_depth=3, random_state=42)
     elif(model == "random_forest"):
         classifier = RandomForestClassifier(n_estimators=100, max_depth=2, random_state=42)
+    elif(model == "one_class_svm"):
+        classifier = svm.OneClassSVM(nu=0.1, kernel="rbf", gamma=0.1)
     else:
         classifier = RandomForestClassifier(n_estimators=100, max_depth=2, random_state=42)
 
@@ -108,12 +111,14 @@ def runModel(individual, classifier, verbose=False, additional_metrics=False):
         if(verbose):
             print("TRAIN-SIZE:", len(train_index), "TEST-SIZE:", len(test_index))
 
-        X_train, y_train = utils.getBalancedDatasetROS(X.iloc[train_index], y.iloc[train_index])
-        """
-        train = utils.getBalancedDataset(X.iloc[train_index], y.iloc[train_index])
-        X_train  = train.iloc[ : , :-1 ]
-        y_train = train.iloc[ : , -1]
-        """
+        if(individual.parameters["train_method"] == "one_class"):
+            X_train, y_train = utils.getOneClassDataset(X.iloc[train_index], y.iloc[train_index])
+        elif(individual.parameters["train_method"] == "integer_balanced"):
+            train = utils.getBalancedDataset(X.iloc[train_index], y.iloc[train_index])
+            X_train  = train.iloc[ : , :-1 ]
+            y_train = train.iloc[ : , -1]
+        else: ## float_balanced // default
+            X_train, y_train = utils.getBalancedDatasetROS(X.iloc[train_index], y.iloc[train_index])
 
         if(verbose):
             print("Class balance:0|1 - {}|{}".format(  (y_train == 0).sum(), (y_train == 1).sum()))
@@ -122,6 +127,8 @@ def runModel(individual, classifier, verbose=False, additional_metrics=False):
         classifier.fit(X_train, y_train)
 
         y_pred = classifier.predict(X_test)
+        if(individual.parameters["model"] == "one_class_svm"):
+            y_pred = utils.convertOneClassResullts(y_pred)
 
         score = getScore(y_test, y_pred, additional_metrics=additional_metrics)
         scores.append(score)
