@@ -29,7 +29,7 @@ class Individual:
         return self
 
     def getDefaultParameters(self):
-        parameters = {"classes_config":"F0,F1,F2,F3XF4,HCC", "model":"random_forest", "metric":"auc_roc", "dataset_scope_reduced":False, "verbose":False, "additional_metrics":False}
+        parameters = {"classes_config":"one_class", "model":"one_class_svm", "train_method":"one_class" ,"metric":"auc_roc", "dataset_scope_reduced":False, "verbose":False, "additional_metrics":False}
         return parameters
 
     def computeFitness(self):

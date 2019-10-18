@@ -43,5 +43,6 @@ def plotConfusionMatrix(cm):
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
     plt.show()
+    print("Printed Confusion Matrix")
 
     return
