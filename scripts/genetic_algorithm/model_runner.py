@@ -5,6 +5,7 @@ from sklearn import svm
 from sklearn.svm import OneClassSVM
 
 from sklearn.model_selection import KFold
+from sklearn.model_selection import LeaveOneOut
 import numpy as np
 
 from sklearn.metrics import classification_report, confusion_matrix
@@ -77,9 +78,13 @@ def getScore(y_test, y_pred, scoring=metric, additional_metrics=False):
 
 
 def runConfiguration(individual):
-
+    foldType = individual.parameters["fold_type"]
     classifier = getClassifier(individual.parameters['model'])
-    score = runModel(individual, classifier, individual.parameters["verbose"], additional_metrics=individual.parameters["additional_metrics"])
+
+    if(foldType == "leave_one_out"):
+        score = runModelLeaveOneOut(individual, classifier, individual.parameters["verbose"], additional_metrics=individual.parameters["additional_metrics"])
+    else:
+        score = runModel(individual, classifier, individual.parameters["verbose"], additional_metrics=individual.parameters["additional_metrics"])
 
     return score
 
@@ -98,6 +103,57 @@ def getClassifier(model):
         classifier = RandomForestClassifier(n_estimators=100, max_depth=2, random_state=42)
 
     return classifier
+
+def runModelLeaveOneOut(individual, classifier, verbose=False, additional_metrics=False):
+    dataset = getIndivDataset(individual)
+    X = dataset.iloc[ : , 1:-1] #removing ID column
+    y = dataset.iloc[ : , -1:]
+    kf = LeaveOneOut()
+    kf.get_n_splits(X)
+    scores = []
+    conf_matrixes = []
+    y_pred = []
+    y_tt =[]
+    for train_index, test_index in kf.split(X):
+        if(verbose):
+            print("TRAIN-SIZE:", len(train_index), "TEST-SIZE:", len(test_index))
+
+        if(individual.parameters["train_method"] == "one_class"):
+            X_train, y_train = utils.getOneClassDataset(X.iloc[train_index], y.iloc[train_index])
+        elif(individual.parameters["train_method"] == "integer_balanced"):
+            train = utils.getBalancedDataset(X.iloc[train_index], y.iloc[train_index])
+            X_train  = train.iloc[ : , :-1 ]
+            y_train = train.iloc[ : , -1]
+        else: ## float_balanced // default
+            X_train, y_train = utils.getBalancedDatasetROS(X.iloc[train_index], y.iloc[train_index])
+
+        X_test, y_test = X.iloc[test_index], y.iloc[test_index]
+
+        classifier.fit(X_train, y_train)
+        y_p = classifier.predict(X_test)
+        if(individual.parameters["model"] == "one_class_svm"):
+            y_p = utils.convertOneClassResullts(y_p)
+        y_pred.extend(y_p)
+        y_tt.extend(y_test)
+        #print("**",y_test)
+
+    score = getScore(y, y_pred, additional_metrics=additional_metrics)
+    scores.append(score)
+    conf_matrix = confusion_matrix(y, y_pred)
+    conf_matrixes.append(conf_matrix)
+
+    if(additional_metrics):
+        printAdditionalMetrics(scores, individual)
+        plot_utils.printConfusionMatrix(conf_matrixes, plot_matrix=True)
+        return
+    else:
+        scores = np.array(scores)
+        conf_matrixes = np.array(conf_matrixes)
+        if(verbose):
+            print("Model:{} | Metric:{}\nScore:{:.3f} (+-{:.3f})".format(individual.parameters['model'], metric, scores.mean(), scores.std()))
+            plot_utils.printConfusionMatrix(conf_matrixes, plot_matrix=True)
+        return round(scores.mean(), 4)
+
 
 def runModel(individual, classifier, verbose=False, additional_metrics=False):
     dataset = getIndivDataset(individual)

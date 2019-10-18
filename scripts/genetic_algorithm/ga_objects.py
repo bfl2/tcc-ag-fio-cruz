@@ -29,7 +29,7 @@ class Individual:
         return self
 
     def getDefaultParameters(self):
-        parameters = {"classes_config":"one_class", "model":"one_class_svm", "train_method":"one_class" ,"metric":"auc_roc", "dataset_scope_reduced":False, "verbose":False, "additional_metrics":False}
+        parameters = {"classes_config":"standard", "model":"random_forest", "train_method":"standard", "fold_type":"leave_one_out", "metric":"auc_roc", "verbose":False, "additional_metrics":False}
         return parameters
 
     def computeFitness(self):
@@ -82,7 +82,7 @@ class Population:
         self.offspring_size = 2*self.pop_size
         self.elite_frac = 0.2
         self.crossover_chance = 0.9
-        self.mutation_chance = 0.1
+        self.mutation_chance = 0.3
 
         self.indivs = []
         self.next_pop_parents = []
@@ -167,6 +167,7 @@ class Population:
 
         offspring = []
         offspring.append(self.next_pop_parents[0])
+        offspring.append(self.next_pop_parents[-1])
         while( len(offspring) < self.offspring_size):
             parent1, parent2 = self.getParents()
             seed = random.random()

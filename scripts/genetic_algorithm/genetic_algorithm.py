@@ -7,14 +7,16 @@ def runAdditionalMethods(indiv):
     indiv.parameters["verbose"] = True
     indiv.parameters["additional_metrics"] = True
     model_runner.runConfiguration(indiv)
+    print(indiv.parameters)
 
     return
 
 def runSampleIndiv():
 
-    genes = [0,0,0,0,0,1,0,1,0,0]
+    genes = [1, 0, 1, 1, 1, 1, 0, 0, 0, 0]
     indiv = Individual()
-    indiv.generateRandomIndiv()
+    indiv = indiv.generatedIndiv(genes)
+    #indiv.generateRandomIndiv()
     indiv.parameters["verbose"] = True
     indiv.parameters["additional_metrics"] = True
     model_runner.runConfiguration(indiv)
