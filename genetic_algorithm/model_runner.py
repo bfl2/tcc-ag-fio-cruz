@@ -83,7 +83,7 @@ def runConfiguration(individual):
 
     if(foldType == "leave_one_out"):
         score = runModelLeaveOneOut(individual, classifier, individual.parameters["verbose"], additional_metrics=individual.parameters["additional_metrics"])
-    else:
+    else: ### Default | KFold = 5
         score = runModel(individual, classifier, individual.parameters["verbose"], additional_metrics=individual.parameters["additional_metrics"])
 
     return score
@@ -98,7 +98,7 @@ def getClassifier(model):
     elif(model == "random_forest"):
         classifier = RandomForestClassifier(n_estimators=100, max_depth=2, random_state=42)
     elif(model == "one_class_svm"):
-        classifier = svm.OneClassSVM(nu=0.1, kernel="rbf", gamma=0.1)
+        classifier = svm.OneClassSVM(nu=0.5, kernel="rbf", gamma="auto", random_state=42)
     else:
         classifier = RandomForestClassifier(n_estimators=100, max_depth=2, random_state=42)
 
