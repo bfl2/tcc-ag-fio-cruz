@@ -15,7 +15,7 @@ def runAdditionalMethods(indiv):
     indiv.parameters["verbose"] = True
     indiv.parameters["additional_metrics"] = True
     model_runner.runConfiguration(indiv)
-    print(indiv.parameters)
+    print("indiv parameters:{}".format(indiv.parameters))
 
     return
 
@@ -35,10 +35,11 @@ def runSampleIndiv(genes, parameters):
     return
 
 def importParametersFromJson():
+    filename = "execution_parameters.json"
+    with open(filename) as f_in:
+       return(json.load(f_in))
 
-    return
-
-def getExecutionParameters(classes_config, model, balance_method, fold_type, metric, verbose, additional_metrics):
+def getParametersDict(classes_config, model, balance_method, fold_type, metric, verbose, additional_metrics):
     """
     Attributes:
         classes_config:
@@ -76,11 +77,19 @@ def getExecutionParameters(classes_config, model, balance_method, fold_type, met
     parameters = {"classes_config":classes_config, "model":model, "balance_method":balance_method, "fold_type":fold_type, "metric":metric, "verbose":verbose, "additional_metrics":additional_metrics}
     return parameters
 
+def getExecutionParameters(parameters_source=""):
+    if(parameters_source == ""):
+        params = getParametersDict("standard", "svm", "float_balanced", "kfold", "auc_roc", False, False)
+    else:
+        params = importParametersFromJson()
+
+
+    return params
+
 
 def geneticAlgorithm(parameters):
 
     stop_condition = False
-    verbose = True
     GENS_WITHOUT_IMPROVEMENT_TARGET = 20
     GENS_LIMIT = 60
 
@@ -122,7 +131,7 @@ def geneticAlgorithm(parameters):
 
 def main():
     ### Run Genetic algorithm for feature selection
-    params = getExecutionParameters("standard", "svm", "float_balanced", "kfold", "auc_roc", False, False)
+    params = getExecutionParameters(parameters_source="file")
     start_time = time.time()
 
     print("\n### Running Genetic Algorithm")
@@ -131,7 +140,7 @@ def main():
 
     printElapsedTime(start_time, "Genetic Algorithm")
 
-    start_time - time.time()
+    start_time = time.time()
     print("\n### Running Best Indiv simulation:")
     runAdditionalMethods(ga_results["best_indiv"])
     printElapsedTime(start_time, "Best Model Execution")
@@ -140,7 +149,7 @@ def main():
     ### Running classifier with full features
     print("\n### Running Full Features model")
     runFullFeatureSample(params)
-    print("### Finished Full Features model")
+    print("### Finished running Full Features model")
     return
 
 
