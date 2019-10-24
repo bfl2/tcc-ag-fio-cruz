@@ -2,6 +2,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib
 import numpy as np
+import time
 
 def sumMatrixes(matrixes):
     tp=fp=fn=tn=0
@@ -21,7 +22,16 @@ def printConfusionMatrix(cms, plot_matrix=False):
         plotConfusionMatrix(cm)
     return cm
 
-def plotConfusionMatrix(cm):
+def plot_to_file():
+    reports_folder = "reports"
+    millis = int(round(time.time() * 1000))%1000
+    time_formatted = time.strftime("%H %M %S", time.gmtime(time.time()))
+    image_name = "{}/confusion-matrix-{} {}.png".format(reports_folder, time_formatted, millis)
+    plt.savefig(image_name)
+
+    return image_name
+
+def plotConfusionMatrix(cm, save_plot_to_file=True):
 
     sns.set(font_scale=2)
     fig = plt.figure(figsize=(10,10))
@@ -42,7 +52,10 @@ def plotConfusionMatrix(cm):
     heatmap.xaxis.set_ticklabels(heatmap.xaxis.get_ticklabels(), rotation=0, va="center", ha='center', fontsize=14)
     plt.ylabel('True label')
     plt.xlabel('Predicted label')
-    plt.show()
-    print("Printed Confusion Matrix")
+    if(save_plot_to_file):
+        image_name = plot_to_file()
+    else:
+        plt.show()
+    print("Printed Confusion Matrix to file:", image_name)
 
     return
