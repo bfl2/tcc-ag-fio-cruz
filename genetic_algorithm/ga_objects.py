@@ -132,7 +132,7 @@ class Population:
         if(len(self.indivs) > 0):
             self.max_fitness = self.indivs[0].fitness
             sum = np.sum(indiv.fitness for indiv in self.indivs)
-            self.avg_fitness = sum/len(self.indivs)
+            self.avg_fitness = round(sum/len(self.indivs), 4)
         else:
             print("Error: Population is empty")
 

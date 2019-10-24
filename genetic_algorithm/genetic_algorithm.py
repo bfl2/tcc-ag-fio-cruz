@@ -3,11 +3,29 @@ from ga_objects import Population
 import model_runner
 import time
 import json
+import sys
+import os
+import pprint
 
 def printElapsedTime(start_time, name):
     elapsed_time = time.time() - start_time
     time_formatted = time.strftime("%H:%M:%S", time.gmtime(elapsed_time))
     print("{} - Elapsed Time:{}".format(name, time_formatted))
+    return
+
+def setStdoutToReportFile(parameters):
+    reports_folder = "reports"
+    ## Check if reports folder exists, if not create it
+    if not os.path.exists(reports_folder):
+        os.makedirs(reports_folder)
+
+    tm = time.localtime(time.time())
+    timestamp = time.strftime("(%d-%m)%H %M %S", tm)
+    file_name = "{}/{}-{}.txt".format(reports_folder, parameters["model"], timestamp)
+    print(" ### Writting Report to file: ", file_name)
+    sys.stdout = open(file_name, "w+", encoding='utf-8')
+    print("File:{} \n Parameters:".format(file_name))
+    pprint.pprint(parameters)
     return
 
 def runAdditionalMethods(indiv):
@@ -129,7 +147,7 @@ def geneticAlgorithm(parameters):
 
     return genetic_algorithm_results
 
-def main():
+def main(write_results_report_to_file=False):
     ### Run Genetic algorithm for feature selection
     params = getExecutionParameters(parameters_source="file")
     start_time = time.time()
@@ -139,6 +157,9 @@ def main():
     print("### Finished Running Genetic Algorithm")
 
     printElapsedTime(start_time, "Genetic Algorithm")
+
+    if(write_results_report_to_file):
+        setStdoutToReportFile(params)
 
     start_time = time.time()
     print("\n### Running Best Indiv simulation:")
@@ -154,5 +175,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(write_results_report_to_file=True)
 
