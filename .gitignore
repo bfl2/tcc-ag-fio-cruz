@@ -6,3 +6,4 @@ _pycache_
 /scripts/genetic_algorithm/_pycache_/
 *.pyc
 *.pyo
+/genetic_algorithm/reports
