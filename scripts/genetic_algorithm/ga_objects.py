@@ -9,27 +9,34 @@ random_state = 42
 class Individual:
     """ Class constants """
     SNPs = ["PTX3 rs1840680","PTX3 rs2305619","MBL -221","IL-10 -1082","IL-10 -819","IL-10 -592","TNF-308","SOD2","MPO C-463T","IL-28b rs12979860"]
-    def __init__(self):
+    def __init__(self, params = None):
         self.gene_count = 10
-        self.parameters = self.getDefaultParameters()
+        if(params == None):
+            self.parameters = self.getDefaultParameters()
+        else:
+            self.parameters = params
         self.genes = []
         self.fitness = 0
         self.fitnessCalc = False
         return
 
     def generateRandomIndiv(self):
-        class_chances = {"class0_chance":0.5, "class1_chance":0.5}
+        CLASS_CHANCES = {"class0_chance":0.5, "class1_chance":0.5}
         while (len(self.genes) < self.gene_count):
             seed = random.random()
-            if(seed < class_chances["class0_chance"]):
+            if(seed < CLASS_CHANCES["class0_chance"]):
                 value = 0
             else:
                 value = 1
             self.genes.append(value)
         return self
 
+    def setParameters(self, param):
+        self.parameters = param
+        return
+
     def getDefaultParameters(self):
-        parameters = {"classes_config":"standard", "model":"random_forest", "train_method":"standard", "fold_type":"leave_one_out", "metric":"auc_roc", "verbose":False, "additional_metrics":False}
+        parameters = {"classes_config":"standard", "model":"svm", "train_method":"standard", "fold_type":"kfold", "metric":"auc_roc", "verbose":False, "additional_metrics":False}
         return parameters
 
     def computeFitness(self):
@@ -44,7 +51,7 @@ class Individual:
         if(genes == [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]): ### Genes must contain at least one feature
             seed = random.randrange(0, self.gene_count - 1)
             genes[seed] = 1
-        newIndiv = Individual()
+        newIndiv = Individual(params=self.parameters)
         newIndiv.genes = genes
         newIndiv.computeFitness()
 
@@ -77,12 +84,14 @@ class Individual:
 class Population:
     """ Class constants """
 
-    def __init__(self):
-        self.pop_size = 30
-        self.offspring_size = 2*self.pop_size
-        self.elite_frac = 0.2
-        self.crossover_chance = 0.9
-        self.mutation_chance = 0.3
+    def __init__(self, params = None):
+        self.parameters = params
+
+        self.POP_SIZE = 30
+        self.OFFSPRING_SIZE = 2*self.POP_SIZE
+        self.ELITE_FRAC = 0.2
+        self.CROSSOVER_CHANCE = 0.9
+        self.MUTATION_CHANCE = 0.3
 
         self.indivs = []
         self.next_pop_parents = []
@@ -92,8 +101,8 @@ class Population:
         return
 
     def initiatePopulation(self):
-        while(len(self.indivs) < self.pop_size):
-            indiv = Individual()
+        while(len(self.indivs) < self.POP_SIZE):
+            indiv = Individual(self.parameters)
             indiv.generateRandomIndiv()
             indiv.computeFitness()
             self.indivs.append(indiv)
@@ -144,11 +153,11 @@ class Population:
 
     def parentSelection(self):
         self.next_pop_parents = []
-        elite_count = int(self.pop_size*self.elite_frac)
-        elite_pop = self.indivs[:elite_count]
+        ELITE_COUNT = int(self.POP_SIZE*self.ELITE_FRAC)
+        elite_pop = self.indivs[:ELITE_COUNT]
         self.next_pop_parents.extend(elite_pop)
         #Adding random indivs from population to parent pool via tournament selection
-        tournament_pop = self.tournamentSelection(self.indivs[elite_count:], (self.pop_size*(1 - self.elite_frac))/2)
+        tournament_pop = self.tournamentSelection(self.indivs[ELITE_COUNT:], (self.POP_SIZE*(1 - self.ELITE_FRAC))/2)
         self.next_pop_parents.extend(tournament_pop)
 
         return
@@ -168,11 +177,11 @@ class Population:
         offspring = []
         offspring.append(self.next_pop_parents[0])
         offspring.append(self.next_pop_parents[-1])
-        while( len(offspring) < self.offspring_size):
+        while( len(offspring) < self.OFFSPRING_SIZE):
             parent1, parent2 = self.getParents()
             seed = random.random()
             ##Crossover
-            if(self.crossover_chance >= seed):
+            if(self.CROSSOVER_CHANCE >= seed):
                 childs = parent1.crossover(parent2)
             else:
                 childs = [parent1, parent2]
@@ -180,7 +189,7 @@ class Population:
             for c in childs:
                 ##Mutation
                 seed - random.random()
-                if (self.mutation_chance >= seed):
+                if (self.MUTATION_CHANCE >= seed):
                     c.mutation()
                 ##Calculate Fitness
                 c.computeFitness()
@@ -188,13 +197,13 @@ class Population:
             offspring.extend(childs)
 
         ## Return new population
-        new_pop = Population()
+        new_pop = Population(params=self.parameters)
         new_pop.indivs = offspring
 
         return new_pop
 
     def applySelectionPressure(self):
-        ### Reduce population to pop_size
+        ### Reduce population to POP_SIZE
         self.sortPopulation()
-        self.indivs = self.indivs[:self.pop_size]
+        self.indivs = self.indivs[:self.POP_SIZE]
         self.calculateMetrics(sort=False)

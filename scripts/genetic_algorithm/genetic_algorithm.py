@@ -11,34 +11,42 @@ def runAdditionalMethods(indiv):
 
     return
 
-def runSampleIndiv():
+def runFullFeatureSample():
+    genes = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+    runSampleIndiv(genes)
+    return
 
-    genes = [1, 0, 1, 1, 1, 1, 0, 0, 0, 0]
+def runSampleIndiv(genes):
+
     indiv = Individual()
     indiv = indiv.generatedIndiv(genes)
-    #indiv.generateRandomIndiv()
     indiv.parameters["verbose"] = True
     indiv.parameters["additional_metrics"] = True
     model_runner.runConfiguration(indiv)
 
     return
 
+def getExecutionParameters():
+    parameters = {"classes_config":"standard", "model":"svm", "train_method":"standard", "fold_type":"kfold", "metric":"auc_roc", "verbose":False, "additional_metrics":False}
+    return parameters
+
 def main():
 
+    parameters = getExecutionParameters()
     stop_condition = False
     verbose = True
-    GENS_WITHOUT_IMPROVEMENT = 20
+    GENS_WITHOUT_IMPROVEMENT_TARGET = 20
     GENS_LIMIT = 60
 
     generations = []
-    population = Population()
+    population = Population(params=parameters)
     population.initiatePopulation()
 
     generations.append(population)
     gens_without_improvement = 0
 
     while(not stop_condition):
-        print("Generation {}".format(len(generations)))
+        print("Generation {}\n params: {}".format(len(generations), population.parameters))
         ##Select Parents
         population.parentSelection()
         ##Generate Children
@@ -52,7 +60,7 @@ def main():
 
         generations.append(population)
 
-        if(gens_without_improvement > GENS_WITHOUT_IMPROVEMENT or len(generations) > GENS_LIMIT):
+        if(gens_without_improvement > GENS_WITHOUT_IMPROVEMENT_TARGET or len(generations) > GENS_LIMIT):
             stop_condition = True
 
         if(verbose):
