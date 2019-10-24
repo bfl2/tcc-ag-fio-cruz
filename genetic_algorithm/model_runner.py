@@ -21,7 +21,7 @@ path_to_parent2 = os.path.dirname(path_to_parent)
 sys.path.append(path_to_parent)
 sys.path.append(path_to_parent2)
 
-from scripts import utils
+import ga_utils
 import plot_utils
 
 ## Disabling DataConversion Warning
@@ -46,7 +46,7 @@ def printAdditionalMetrics(scores, indiv):
     auc_roc = np.array(auc_roc)
 
     print("Model:{} ".format(indiv.parameters["model"]))
-    print("Features:{} | {}".format(utils.getFeaturesTextFromGenes(indiv.genes), indiv.genes))
+    print("Features:{} | {}".format(ga_utils.getFeaturesTextFromGenes(indiv.genes), indiv.genes))
     print("Accuracy:{:.3f} (+-{:.3f})".format(accuracy.mean(), accuracy.std()))
     print("Balanced Accuracy:{:.3f} (+-{:.3f})".format(balanced_accuracy.mean(), balanced_accuracy.std()))
     print("AUC ROC:{:.3f} (+-{:.3f})".format(auc_roc.mean(), auc_roc.std()))
@@ -55,7 +55,7 @@ def printAdditionalMetrics(scores, indiv):
 
 def getIndivDataset(individual):
 
-    indiv_dataset = utils.getFilteredDataset(individual.genes, classes_config=individual.parameters["classes_config"])
+    indiv_dataset = ga_utils.getFilteredDataset(individual.genes, classes_config=individual.parameters["classes_config"])
 
     return indiv_dataset
 
@@ -104,38 +104,37 @@ def getClassifier(model):
 
     return classifier
 
-def runModelLeaveOneOut(individual, classifier, verbose=False, additional_metrics=False):
+def runModelLeaveOneOut(individual, classifier, verbose=False, additional_metrics=False, debug=False):
     dataset = getIndivDataset(individual)
     X = dataset.iloc[ : , 1:-1] #removing ID column
     y = dataset.iloc[ : , -1:]
-    kf = LeaveOneOut()
-    kf.get_n_splits(X)
+    loo = LeaveOneOut()
+    loo.get_n_splits(X)
     scores = []
     conf_matrixes = []
     y_pred = []
     y_tt =[]
-    for train_index, test_index in kf.split(X):
-        if(verbose):
+    for train_index, test_index in loo.split(X):
+        if(verbose and debug):
             print("TRAIN-SIZE:", len(train_index), "TEST-SIZE:", len(test_index))
 
-        if(individual.parameters["train_method"] == "one_class"):
-            X_train, y_train = utils.getOneClassDataset(X.iloc[train_index], y.iloc[train_index])
-        elif(individual.parameters["train_method"] == "integer_balanced"):
-            train = utils.getBalancedDataset(X.iloc[train_index], y.iloc[train_index])
+        if(individual.parameters["balance_method"] == "one_class"):
+            X_train, y_train = ga_utils.getOneClassDataset(X.iloc[train_index], y.iloc[train_index])
+        elif(individual.parameters["balance_method"] == "integer_balanced"):
+            train = ga_utils.getBalancedDataset(X.iloc[train_index], y.iloc[train_index])
             X_train  = train.iloc[ : , :-1 ]
             y_train = train.iloc[ : , -1]
         else: ## float_balanced // default
-            X_train, y_train = utils.getBalancedDatasetROS(X.iloc[train_index], y.iloc[train_index])
+            X_train, y_train = ga_utils.getBalancedDatasetROS(X.iloc[train_index], y.iloc[train_index])
 
         X_test, y_test = X.iloc[test_index], y.iloc[test_index]
 
         classifier.fit(X_train, y_train)
         y_p = classifier.predict(X_test)
         if(individual.parameters["model"] == "one_class_svm"):
-            y_p = utils.convertOneClassResullts(y_p)
+            y_p = ga_utils.convertOneClassResullts(y_p)
         y_pred.extend(y_p)
         y_tt.extend(y_test)
-        #print("**",y_test)
 
     score = getScore(y, y_pred, additional_metrics=additional_metrics)
     scores.append(score)
@@ -150,12 +149,12 @@ def runModelLeaveOneOut(individual, classifier, verbose=False, additional_metric
         scores = np.array(scores)
         conf_matrixes = np.array(conf_matrixes)
         if(verbose):
-            print("Model:{} | Metric:{}\nScore:{:.3f} (+-{:.3f})".format(individual.parameters['model'], metric, scores.mean(), scores.std()))
+            print("\n### Model:{} | Metric:{}\nScore:{:.3f} (+-{:.3f})".format(individual.parameters['model'], metric, scores.mean(), scores.std()))
             plot_utils.printConfusionMatrix(conf_matrixes, plot_matrix=True)
         return round(scores.mean(), 4)
 
 
-def runModel(individual, classifier, verbose=False, additional_metrics=False):
+def runModel(individual, classifier, verbose=False, additional_metrics=False, debug=False):
     dataset = getIndivDataset(individual)
     X = dataset.iloc[ : , 1:-1] #removing ID column
     y = dataset.iloc[ : , -1:]
@@ -164,27 +163,27 @@ def runModel(individual, classifier, verbose=False, additional_metrics=False):
     scores = []
     conf_matrixes = []
     for train_index, test_index in kf.split(X):
-        if(verbose):
-            print("TRAIN-SIZE:", len(train_index), "TEST-SIZE:", len(test_index))
+        if(verbose and debug):
+            print("     TRAIN-SIZE:", len(train_index), "TEST-SIZE:", len(test_index))
 
-        if(individual.parameters["train_method"] == "one_class"):
-            X_train, y_train = utils.getOneClassDataset(X.iloc[train_index], y.iloc[train_index])
-        elif(individual.parameters["train_method"] == "integer_balanced"):
-            train = utils.getBalancedDataset(X.iloc[train_index], y.iloc[train_index])
+        if(individual.parameters["balance_method"] == "one_class"):
+            X_train, y_train = ga_utils.getOneClassDataset(X.iloc[train_index], y.iloc[train_index])
+        elif(individual.parameters["balance_method"] == "integer_balanced"):
+            train = ga_utils.getBalancedDataset(X.iloc[train_index], y.iloc[train_index])
             X_train  = train.iloc[ : , :-1 ]
             y_train = train.iloc[ : , -1]
         else: ## float_balanced // default
-            X_train, y_train = utils.getBalancedDatasetROS(X.iloc[train_index], y.iloc[train_index])
+            X_train, y_train = ga_utils.getBalancedDatasetROS(X.iloc[train_index], y.iloc[train_index])
 
-        if(verbose):
-            print("Class balance:0|1 - {}|{}".format(  (y_train == 0).sum(), (y_train == 1).sum()))
+        if(verbose and debug):
+            print("     Class balance:0|1 - {}|{}".format(  (y_train == 0).sum(), (y_train == 1).sum()))
         X_test, y_test = X.iloc[test_index], y.iloc[test_index]
 
         classifier.fit(X_train, y_train)
 
         y_pred = classifier.predict(X_test)
         if(individual.parameters["model"] == "one_class_svm"):
-            y_pred = utils.convertOneClassResullts(y_pred)
+            y_pred = ga_utils.convertOneClassResullts(y_pred)
 
         score = getScore(y_test, y_pred, additional_metrics=additional_metrics)
         scores.append(score)
@@ -199,6 +198,6 @@ def runModel(individual, classifier, verbose=False, additional_metrics=False):
         scores = np.array(scores)
         conf_matrixes = np.array(conf_matrixes)
         if(verbose):
-            print("Model:{} | Metric:{}\nScore:{:.3f} (+-{:.3f})".format(individual.parameters['model'], metric, scores.mean(), scores.std()))
+            print("\n   Model:{} | Metric:{}\n  Score:{:.3f} (+-{:.3f})".format(individual.parameters['model'], metric, scores.mean(), scores.std()))
             plot_utils.printConfusionMatrix(conf_matrixes, plot_matrix=True)
         return round(scores.mean(), 4)

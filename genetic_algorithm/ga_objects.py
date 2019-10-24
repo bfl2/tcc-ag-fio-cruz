@@ -36,7 +36,7 @@ class Individual:
         return
 
     def getDefaultParameters(self):
-        parameters = {"classes_config":"standard", "model":"svm", "train_method":"standard", "fold_type":"kfold", "metric":"auc_roc", "verbose":False, "additional_metrics":False}
+        parameters = {"classes_config":"standard", "model":"svm", "balance_method":"standard", "fold_type":"kfold", "metric":"auc_roc", "verbose":False, "additional_metrics":False}
         return parameters
 
     def computeFitness(self):
@@ -109,8 +109,8 @@ class Population:
         self.calculateMetrics()
         return
 
-    def printPopulation(self, generation_index, verbose=False):
-        if(verbose):
+    def printPopulation(self, generation_index):
+        if(self.parameters["verbose"]):
             for indiv in self.indivs:
                 print("Index:{} Genes:{} Fitness:{}".format(self.indivs.index(indiv), indiv.genes, indiv.fitness) )
 
