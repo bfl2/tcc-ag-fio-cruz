@@ -77,6 +77,8 @@ class Individual:
     def mutation(self):
         index_mut = random.randrange(0, self.gene_count - 1)
         self.genes[index_mut] = (self.genes[index_mut] + 1) % 2
+        self.fitnessCalc = False
+        self.computeFitness()
 
         return
 
@@ -109,8 +111,8 @@ class Population:
         self.calculateMetrics()
         return
 
-    def printPopulation(self, generation_index):
-        if(self.parameters["verbose"]):
+    def printPopulation(self, generation_index, print_pop=False):
+        if(self.parameters["verbose"] or print_pop):
             for indiv in self.indivs:
                 print("Index:{} Genes:{} Fitness:{}".format(self.indivs.index(indiv), indiv.genes, indiv.fitness) )
 
@@ -176,7 +178,6 @@ class Population:
 
         offspring = []
         offspring.append(self.next_pop_parents[0])
-        offspring.append(self.next_pop_parents[-1])
         while( len(offspring) < self.OFFSPRING_SIZE):
             parent1, parent2 = self.getParents()
             seed = random.random()
@@ -188,7 +189,7 @@ class Population:
 
             for c in childs:
                 ##Mutation
-                seed - random.random()
+                seed = random.random()
                 if (self.MUTATION_CHANCE >= seed):
                     c.mutation()
                 ##Calculate Fitness
@@ -202,8 +203,24 @@ class Population:
 
         return new_pop
 
+    def getRandomIndivSubset(self, indivs, subset_size):
+        subset = random.sample(indivs, subset_size)
+        return subset
+
+    def getBestIndiv(self):
+        if(self.max_fitness <= self.indivs[0].fitness):
+            return self.indivs[0]
+        else:
+            print("#population is not sorted properly")
+            self.sortPopulation()
+            return self.indivs[0]
+
     def applySelectionPressure(self):
         ### Reduce population to POP_SIZE
         self.sortPopulation()
-        self.indivs = self.indivs[:self.POP_SIZE]
-        self.calculateMetrics(sort=False)
+        elite_offspring = self.indivs[:int(self.POP_SIZE/2)]
+        remaining_pop = self.indivs[int(self.POP_SIZE/2):]
+        remaining_selected = self.getRandomIndivSubset(remaining_pop, int(self.POP_SIZE/2))
+        elite_offspring.extend(remaining_selected)
+        self.indivs = elite_offspring
+        self.calculateMetrics(sort=True)
