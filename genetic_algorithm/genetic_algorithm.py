@@ -6,6 +6,7 @@ import json
 import sys
 import os
 import pprint
+import copy
 
 def printElapsedTime(start_time, name):
     elapsed_time = time.time() - start_time
@@ -45,7 +46,7 @@ def runFullFeatureSample(parameters):
 def runSampleIndiv(genes, parameters):
 
     indiv = Individual(parameters)
-    indiv = indiv.generatedIndiv(genes)
+    indiv = indiv.generateIndiv(genes)
     indiv.parameters["verbose"] = True
     indiv.parameters["additional_metrics"] = True
     model_runner.runConfiguration(indiv)
@@ -108,8 +109,8 @@ def getExecutionParameters(parameters_source=""):
 def geneticAlgorithm(parameters):
 
     stop_condition = False
-    GENS_WITHOUT_IMPROVEMENT_TARGET = 15
-    GENS_LIMIT = 60
+    GENS_WITHOUT_IMPROVEMENT_TARGET = 60
+    GENS_LIMIT = 120
 
     generations = []
     population = Population(params=parameters)
@@ -152,14 +153,14 @@ def main(write_results_report_to_file=False):
     params = getExecutionParameters(parameters_source="file")
     start_time = time.time()
 
+    if(write_results_report_to_file):
+        setStdoutToReportFile(params)
+
     print("\n### Running Genetic Algorithm")
     ga_results = geneticAlgorithm(params)
     print("### Finished Running Genetic Algorithm")
 
     printElapsedTime(start_time, "Genetic Algorithm")
-
-    if(write_results_report_to_file):
-        setStdoutToReportFile(params)
 
     print("\n### Running Best Indiv simulation:")
     start_time = time.time()
@@ -175,5 +176,6 @@ def main(write_results_report_to_file=False):
 
 
 if __name__ == "__main__":
-    main(write_results_report_to_file=True)
 
+    selector = True
+    main(write_results_report_to_file=True)

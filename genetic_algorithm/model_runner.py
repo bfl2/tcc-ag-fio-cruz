@@ -32,16 +32,23 @@ warnings.filterwarnings(action='ignore', category=DataConversionWarning)
 ## Global Variables
 metric = "roc_auc"
 empty_feature_indiv = {"genes":[0,0,0,0,0,0,0,0,0,0], "score":0}
-calculated_individuals = [empty_feature_indiv]
+calculated_individuals = []
+calculated_individuals.append(empty_feature_indiv)
 
-def getIndivScoredFromMatch(genes):
-
+def getIndivScoredFromMatch(individual):
+    genes = individual.genes
     for indiv in calculated_individuals:
         if indiv['genes'] == genes:
             return indiv
 
-    return []
+    return None
 
+def addNewIndivScore(individual, score):
+    global calculated_individuals
+    new_result = {"genes":individual.genes, "score":score}
+    calculated_individuals.append(new_result)
+    calculated_individuals = sorted(calculated_individuals, key=lambda k: k['score'])
+    return
 
 def printAdditionalMetrics(scores, indiv):
     accuracy = []
@@ -62,7 +69,7 @@ def printAdditionalMetrics(scores, indiv):
     print("Balanced Accuracy:{:.3f} (+-{:.3f})".format(balanced_accuracy.mean(), balanced_accuracy.std()))
     print("AUC ROC:{:.3f} (+-{:.3f})".format(auc_roc.mean(), auc_roc.std()))
 
-    return
+    return round(auc_roc.mean(),4)
 
 def getIndivDataset(individual):
 
@@ -91,16 +98,17 @@ def getScore(y_test, y_pred, scoring=metric, additional_metrics=False):
 def runConfiguration(individual):
     foldType = individual.parameters["fold_type"]
     classifier = getClassifier(individual.parameters['model'])
-    indiv_match = getIndivScoredFromMatch(individual.genes)
+    indiv_match = getIndivScoredFromMatch(individual)
 
-    if(indiv_match == []):
+    if(indiv_match == None or (individual.parameters["additional_metrics"] or individual.parameters["verbose"])):
         if(foldType == "leave_one_out"):
             score = runModelLeaveOneOut(individual, classifier, individual.parameters["verbose"], additional_metrics=individual.parameters["additional_metrics"])
         else: ### Default | KFold = 5
             score = runModel(individual, classifier, individual.parameters["verbose"], additional_metrics=individual.parameters["additional_metrics"])
 
-        new_result = {"genes":individual.genes, "score":score}
-        calculated_individuals.append(new_result)
+        if(indiv_match == None):
+            addNewIndivScore(individual, score)
+
     else:
         score = indiv_match["score"]
 
@@ -160,9 +168,9 @@ def runModelLeaveOneOut(individual, classifier, verbose=False, additional_metric
     conf_matrixes.append(conf_matrix)
 
     if(additional_metrics):
-        printAdditionalMetrics(scores, individual)
+        mean_score = printAdditionalMetrics(scores, individual)
         plot_utils.printConfusionMatrix(conf_matrixes, plot_matrix=True)
-        return
+        return mean_score
     else:
         scores = np.array(scores)
         conf_matrixes = np.array(conf_matrixes)
@@ -208,9 +216,9 @@ def runModel(individual, classifier, verbose=False, additional_metrics=False, de
         conf_matrixes.append(conf_matrix)
 
     if(additional_metrics):
-        printAdditionalMetrics(scores, individual)
+        mean_score = printAdditionalMetrics(scores, individual)
         plot_utils.printConfusionMatrix(conf_matrixes, plot_matrix=True)
-        return
+        return mean_score
     else:
         scores = np.array(scores)
         conf_matrixes = np.array(conf_matrixes)
