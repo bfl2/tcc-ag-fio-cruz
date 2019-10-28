@@ -29,6 +29,8 @@ class Individual:
             else:
                 value = 1
             self.genes.append(value)
+        if(self.genes == [0,0,0,0,0,0,0,0,0,0]):
+            self.genes[random.randrange(0,self.gene_count-1)] = 1
         return self
 
     def setParameters(self, param):
