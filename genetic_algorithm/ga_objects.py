@@ -22,6 +22,8 @@ class Individual:
 
     def generateRandomIndiv(self):
         CLASS_CHANCES = {"class0_chance":0.5, "class1_chance":0.5}
+        CLASS_CHANCES["class0_chance"] = random.uniform(0.1, 0.9)
+        CLASS_CHANCES["class1_chance"] = 1 - CLASS_CHANCES["class0_chance"]
         while (len(self.genes) < self.gene_count):
             seed = random.random()
             if(seed < CLASS_CHANCES["class0_chance"]):
@@ -95,7 +97,8 @@ class Population:
         self.OFFSPRING_SIZE = 2*self.POP_SIZE
         self.ELITE_FRAC = 0.2
         self.CROSSOVER_CHANCE = 0.9
-        self.MUTATION_CHANCE = 0.3
+        self.MUTATION_CHANCE = 0.2
+        self.RANDOM_INDIV_CHANCE = 0.5 #0.5*(1-crossover_chance)
 
         self.indivs = []
         self.next_pop_parents = []
@@ -187,13 +190,21 @@ class Population:
             if(self.CROSSOVER_CHANCE >= seed):
                 childs = parent1.crossover(parent2)
             else:
-                childs = [parent1, parent2]
+                seed = random.random()
+                if (self.RANDOM_INDIV_CHANCE >= seed): # generate random indiv
+                    print("generating random indiv")
+                    childs = []
+                    childs.append(parent1.generateRandomIndiv())
+                    childs.append(parent1.generateRandomIndiv())
+                else:
+                    childs = [parent1, parent2]
 
             for c in childs:
                 ##Mutation
                 seed = random.random()
                 if (self.MUTATION_CHANCE >= seed):
                     c.mutation()
+
                 ##Calculate Fitness
                 c.computeFitness()
 
