@@ -31,6 +31,17 @@ warnings.filterwarnings(action='ignore', category=DataConversionWarning)
 
 ## Global Variables
 metric = "roc_auc"
+empty_feature_indiv = {"genes":[0,0,0,0,0,0,0,0,0,0], "score":0}
+calculated_individuals = [empty_feature_indiv]
+
+def getIndivScoredFromMatch(genes):
+
+    for indiv in calculated_individuals:
+        if indiv['genes'] == genes:
+            return indiv
+
+    return []
+
 
 def printAdditionalMetrics(scores, indiv):
     accuracy = []
@@ -80,11 +91,18 @@ def getScore(y_test, y_pred, scoring=metric, additional_metrics=False):
 def runConfiguration(individual):
     foldType = individual.parameters["fold_type"]
     classifier = getClassifier(individual.parameters['model'])
+    indiv_match = getIndivScoredFromMatch(individual.genes)
 
-    if(foldType == "leave_one_out"):
-        score = runModelLeaveOneOut(individual, classifier, individual.parameters["verbose"], additional_metrics=individual.parameters["additional_metrics"])
-    else: ### Default | KFold = 5
-        score = runModel(individual, classifier, individual.parameters["verbose"], additional_metrics=individual.parameters["additional_metrics"])
+    if(indiv_match == []):
+        if(foldType == "leave_one_out"):
+            score = runModelLeaveOneOut(individual, classifier, individual.parameters["verbose"], additional_metrics=individual.parameters["additional_metrics"])
+        else: ### Default | KFold = 5
+            score = runModel(individual, classifier, individual.parameters["verbose"], additional_metrics=individual.parameters["additional_metrics"])
+
+        new_result = {"genes":individual.genes, "score":score}
+        calculated_individuals.append(new_result)
+    else:
+        score = indiv_match["score"]
 
     return score
 
@@ -150,7 +168,6 @@ def runModelLeaveOneOut(individual, classifier, verbose=False, additional_metric
         conf_matrixes = np.array(conf_matrixes)
         if(verbose):
             print("\n### Model:{} | Metric:{}\nScore:{:.3f} (+-{:.3f})".format(individual.parameters['model'], metric, scores.mean(), scores.std()))
-            plot_utils.printConfusionMatrix(conf_matrixes, plot_matrix=True)
         return round(scores.mean(), 4)
 
 
@@ -199,5 +216,4 @@ def runModel(individual, classifier, verbose=False, additional_metrics=False, de
         conf_matrixes = np.array(conf_matrixes)
         if(verbose):
             print("\n   Model:{} | Metric:{}\n  Score:{:.3f} (+-{:.3f})".format(individual.parameters['model'], metric, scores.mean(), scores.std()))
-            plot_utils.printConfusionMatrix(conf_matrixes, plot_matrix=True)
         return round(scores.mean(), 4)
