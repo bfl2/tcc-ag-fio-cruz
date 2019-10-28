@@ -25,7 +25,7 @@ def printConfusionMatrix(cms, plot_matrix=False):
 def plot_to_file():
     reports_folder = "reports"
     millis = int(round(time.time() * 1000))%1000
-    time_formatted = time.strftime("%H %M %S", time.gmtime(time.time()))
+    time_formatted = time.strftime("(%d-%m)%H %M %S", time.localtime(time.time()))
     image_name = "{}/confusion-matrix-{} {}.png".format(reports_folder, time_formatted, millis)
     plt.savefig(image_name)
 
