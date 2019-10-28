@@ -192,7 +192,6 @@ class Population:
             else:
                 seed = random.random()
                 if (self.RANDOM_INDIV_CHANCE >= seed): # generate random indiv
-                    print("generating random indiv")
                     childs = []
                     childs.append(parent1.generateRandomIndiv())
                     childs.append(parent1.generateRandomIndiv())

@@ -176,8 +176,4 @@ def main(write_results_report_to_file=False):
 
 if __name__ == "__main__":
     main(write_results_report_to_file=True)
-    """
-    genes = [0, 1, 1, 0, 1, 0, 1, 0, 0, 1]
-    params = getExecutionParameters(parameters_source="file")
-    runSampleIndiv(genes, params)
-    """
+
