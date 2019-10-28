@@ -108,7 +108,7 @@ def getExecutionParameters(parameters_source=""):
 def geneticAlgorithm(parameters):
 
     stop_condition = False
-    GENS_WITHOUT_IMPROVEMENT_TARGET = 20
+    GENS_WITHOUT_IMPROVEMENT_TARGET = 15
     GENS_LIMIT = 60
 
     generations = []
@@ -138,10 +138,10 @@ def geneticAlgorithm(parameters):
         if(gens_without_improvement > GENS_WITHOUT_IMPROVEMENT_TARGET or len(generations) > GENS_LIMIT):
             stop_condition = True
 
-        population.printPopulation(len(generations) - 1)
+        population.printPopulation(len(generations) - 1, print_pop=stop_condition)
 
 
-    best_indiv = generations[-1].indivs[0]
+    best_indiv = population.getBestIndiv()
 
     genetic_algorithm_results = {"best_indiv":best_indiv, "generations":generations}
 
@@ -161,8 +161,8 @@ def main(write_results_report_to_file=False):
     if(write_results_report_to_file):
         setStdoutToReportFile(params)
 
-    start_time = time.time()
     print("\n### Running Best Indiv simulation:")
+    start_time = time.time()
     runAdditionalMethods(ga_results["best_indiv"])
     printElapsedTime(start_time, "Best Model Execution")
     print("### Finished Best Indiv simulation:")
@@ -176,4 +176,8 @@ def main(write_results_report_to_file=False):
 
 if __name__ == "__main__":
     main(write_results_report_to_file=True)
-
+    """
+    genes = [0, 1, 1, 0, 1, 0, 1, 0, 0, 1]
+    params = getExecutionParameters(parameters_source="file")
+    runSampleIndiv(genes, params)
+    """
