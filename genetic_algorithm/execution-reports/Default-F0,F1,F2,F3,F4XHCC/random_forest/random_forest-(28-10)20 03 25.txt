@@ -1,0 +1,207 @@
+File:reports/random_forest-(28-10)20 03 25.txt 
+ Parameters:
+{'additional_metrics': False,
+ 'balance_method': 'float_balanced',
+ 'classes_config': 'standard',
+ 'fold_type': 'kfold',
+ 'metric': 'auc_roc',
+ 'model': 'random_forest',
+ 'verbose': False}
+
+### Running Genetic Algorithm
+Running Genetic Algorithm with params: {'classes_config': 'standard', 'model': 'random_forest', 'balance_method': 'float_balanced', 'fold_type': 'kfold', 'metric': 'auc_roc', 'verbose': False, 'additional_metrics': False}
+Generation 1
+### Generation:1  avg_fit:0.5228 | max_fit:0.5922
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.5922 | Features:[0, 0, 1, 0, 0, 1, 0, 0, 0, 1]
+
+Generation 2
+### Generation:2  avg_fit:0.5473 | max_fit:0.6081
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6081 | Features:[0, 0, 1, 0, 0, 0, 1, 0, 0, 1]
+
+Generation 3
+### Generation:3  avg_fit:0.5635 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 4
+### Generation:4  avg_fit:0.5831 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 5
+### Generation:5  avg_fit:0.5837 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 6
+### Generation:6  avg_fit:0.5736 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 7
+### Generation:7  avg_fit:0.5774 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 8
+### Generation:8  avg_fit:0.5804 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 9
+### Generation:9  avg_fit:0.5772 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 10
+### Generation:10  avg_fit:0.5871 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 11
+### Generation:11  avg_fit:0.5814 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 12
+### Generation:12  avg_fit:0.577 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 13
+### Generation:13  avg_fit:0.5883 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 14
+### Generation:14  avg_fit:0.5843 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 15
+### Generation:15  avg_fit:0.5811 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 16
+### Generation:16  avg_fit:0.5771 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 17
+### Generation:17  avg_fit:0.6017 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 18
+### Generation:18  avg_fit:0.589 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 19
+### Generation:19  avg_fit:0.6013 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 20
+### Generation:20  avg_fit:0.5731 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 21
+### Generation:21  avg_fit:0.5921 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 22
+### Generation:22  avg_fit:0.5845 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 23
+### Generation:23  avg_fit:0.5884 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 24
+### Generation:24  avg_fit:0.5862 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 25
+### Generation:25  avg_fit:0.588 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 26
+### Generation:26  avg_fit:0.5805 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 27
+### Generation:27  avg_fit:0.5752 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 28
+### Generation:28  avg_fit:0.5832 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 29
+### Generation:29  avg_fit:0.5886 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 30
+### Generation:30  avg_fit:0.5842 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 31
+### Generation:31  avg_fit:0.5857 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 32
+### Generation:32  avg_fit:0.5864 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 33
+### Generation:33  avg_fit:0.5746 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+Generation 34
+### Population
+Index:0 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:1 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:2 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:3 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:4 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:5 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:6 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:7 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:8 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:9 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:10 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:11 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:12 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:13 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:14 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:15 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:16 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:17 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:18 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:19 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:20 Genes:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1] Fitness:0.6119
+Index:21 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 1, 1] Fitness:0.5622
+Index:22 Genes:[0, 0, 1, 0, 0, 0, 0, 0, 1, 1] Fitness:0.5479
+Index:23 Genes:[1, 0, 1, 0, 1, 1, 1, 0, 1, 1] Fitness:0.5223
+Index:24 Genes:[0, 0, 1, 0, 1, 1, 1, 1, 1, 1] Fitness:0.5043
+Index:25 Genes:[0, 0, 0, 0, 1, 0, 1, 1, 1, 1] Fitness:0.5016
+Index:26 Genes:[1, 0, 0, 1, 1, 0, 1, 0, 0, 1] Fitness:0.4926
+Index:27 Genes:[1, 1, 0, 1, 1, 0, 1, 1, 1, 0] Fitness:0.466
+Index:28 Genes:[1, 1, 0, 1, 1, 1, 1, 1, 1, 0] Fitness:0.4508
+Index:29 Genes:[0, 0, 0, 1, 1, 1, 0, 1, 0, 0] Fitness:0.4405
+### Generation:34  avg_fit:0.5779 | max_fit:0.6119
+Best Indiv = Model:random_forest Metric:auc_roc Score:0.6119 | Features:[0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+
+### Finished Running Genetic Algorithm
+Genetic Algorithm - Elapsed Time:00:05:32
+
+### Running Best Indiv simulation:
+Model:random_forest 
+Features:['MBL -221', 'IL-10 -819', 'TNF-308', 'IL-28b rs12979860'] | [0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+Accuracy:0.627 (+-0.114)
+Balanced Accuracy:0.612 (+-0.135)
+AUC ROC:0.612 (+-0.135)
+Accumulated Confusion Matrix:
+[165, 21]
+[90, 21]
+Printed Confusion Matrix to file: reports/confusion-matrix-(28-10)20 08 58 825.png
+indiv parameters:{'classes_config': 'standard', 'model': 'random_forest', 'balance_method': 'float_balanced', 'fold_type': 'kfold', 'metric': 'auc_roc', 'verbose': True, 'additional_metrics': True}
+Best Model Execution - Elapsed Time:00:00:00
+### Finished Best Indiv simulation:
+
+### Running Full Features model
+Model:random_forest 
+Features:['PTX3 rs1840680', 'PTX3 rs2305619', 'MBL -221', 'IL-10 -1082', 'IL-10 -819', 'IL-10 -592', 'TNF-308', 'SOD2', 'MPO C-463T', 'IL-28b rs12979860'] | [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+Accuracy:0.610 (+-0.039)
+Balanced Accuracy:0.478 (+-0.036)
+AUC ROC:0.478 (+-0.036)
+Accumulated Confusion Matrix:
+[168, 29]
+[87, 13]
+Printed Confusion Matrix to file: reports/confusion-matrix-(28-10)20 08 59 479.png
+### Finished running Full Features model

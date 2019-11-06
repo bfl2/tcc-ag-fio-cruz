@@ -1,0 +1,9 @@
+{
+    "classes_config":"standard",
+    "model":"gradient_boosting",
+    "balance_method":"float_balanced",
+    "fold_type":"kfold",
+    "metric":"auc_roc",
+    "verbose":false,
+    "additional_metrics":false
+ }

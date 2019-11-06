@@ -1,0 +1,9 @@
+{
+    "classes_config":"standard",
+    "model":"mlp",
+    "balance_method":"float_balanced",
+    "fold_type":"kfold",
+    "metric":"auc_roc",
+    "verbose":false,
+    "additional_metrics":false
+ }

@@ -1,0 +1,44 @@
+File:reports/random_forest-(27-10)22 41 13.txt 
+ Parameters:
+{'additional_metrics': False,
+ 'balance_method': 'float_balanced',
+ 'classes_config': 'standard',
+ 'fold_type': 'kfold',
+ 'metric': 'auc_roc',
+ 'model': 'random_forest',
+ 'verbose': False}
+
+### Running Best Indiv simulation:
+Model:random_forest 
+Features:['MBL -221', 'IL-10 -819', 'TNF-308', 'IL-28b rs12979860'] | [0, 0, 1, 0, 1, 0, 1, 0, 0, 1]
+Accuracy:0.627 (+-0.114)
+Balanced Accuracy:0.612 (+-0.135)
+AUC ROC:0.612 (+-0.135)
+Accumulated Confusion Matrix:
+[165, 21]
+[90, 21]
+Printed Confusion Matrix to file: reports/confusion-matrix-(27-10)22 41 13 935.png
+indiv parameters:{'classes_config': 'standard', 'model': 'random_forest', 'balance_method': 'float_balanced', 'fold_type': 'kfold', 'metric': 'auc_roc', 'verbose': True, 'additional_metrics': True}
+Best Model Execution - Elapsed Time:00:00:00
+### Finished Best Indiv simulation:
+
+### Running Full Features model
+Model:random_forest 
+Features:['PTX3 rs1840680', 'PTX3 rs2305619', 'MBL -221', 'IL-10 -1082', 'IL-10 -819', 'IL-10 -592', 'TNF-308', 'SOD2', 'MPO C-463T', 'IL-28b rs12979860'] | [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+Accuracy:0.610 (+-0.039)
+Balanced Accuracy:0.478 (+-0.036)
+AUC ROC:0.478 (+-0.036)
+Accumulated Confusion Matrix:
+[168, 29]
+[87, 13]
+Printed Confusion Matrix to file: reports/confusion-matrix-(27-10)22 41 14 651.png
+Model:random_forest 
+Features:['PTX3 rs1840680', 'PTX3 rs2305619', 'MBL -221', 'IL-10 -1082', 'IL-10 -819', 'IL-10 -592', 'TNF-308', 'SOD2', 'MPO C-463T', 'IL-28b rs12979860'] | [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+Accuracy:0.610 (+-0.039)
+Balanced Accuracy:0.478 (+-0.036)
+AUC ROC:0.478 (+-0.036)
+Accumulated Confusion Matrix:
+[168, 29]
+[87, 13]
+Printed Confusion Matrix to file: reports/confusion-matrix-(27-10)22 41 15 405.png
+### Finished running Full Features model

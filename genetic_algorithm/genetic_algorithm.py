@@ -109,8 +109,8 @@ def getExecutionParameters(parameters_source=""):
 def geneticAlgorithm(parameters):
 
     stop_condition = False
-    GENS_WITHOUT_IMPROVEMENT_TARGET = 60
-    GENS_LIMIT = 120
+    GENS_WITHOUT_IMPROVEMENT_TARGET = 30
+    GENS_LIMIT = 60
 
     generations = []
     population = Population(params=parameters)
@@ -148,12 +148,12 @@ def geneticAlgorithm(parameters):
 
     return genetic_algorithm_results
 
-def main(write_results_report_to_file=False):
+def main(write_results_report_to_file=False, simplified_report=False):
     ### Run Genetic algorithm for feature selection
     params = getExecutionParameters(parameters_source="file")
     start_time = time.time()
 
-    if(write_results_report_to_file):
+    if(write_results_report_to_file and not simplified_report):
         setStdoutToReportFile(params)
 
     print("\n### Running Genetic Algorithm")
@@ -161,6 +161,9 @@ def main(write_results_report_to_file=False):
     print("### Finished Running Genetic Algorithm")
 
     printElapsedTime(start_time, "Genetic Algorithm")
+
+    if(write_results_report_to_file and simplified_report):
+        setStdoutToReportFile(params)
 
     print("\n### Running Best Indiv simulation:")
     start_time = time.time()
@@ -178,4 +181,4 @@ def main(write_results_report_to_file=False):
 if __name__ == "__main__":
 
     selector = True
-    main(write_results_report_to_file=True)
+    main(write_results_report_to_file=True, simplified_report=False)
