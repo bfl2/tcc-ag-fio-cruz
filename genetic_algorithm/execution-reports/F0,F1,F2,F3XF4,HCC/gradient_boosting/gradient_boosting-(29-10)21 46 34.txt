@@ -1,0 +1,203 @@
+File:reports/gradient_boosting-(29-10)21 46 34.txt 
+ Parameters:
+{'additional_metrics': False,
+ 'balance_method': 'float_balanced',
+ 'classes_config': 'F0,F1,F2,F3XF4,HCC',
+ 'fold_type': 'kfold',
+ 'metric': 'auc_roc',
+ 'model': 'gradient_boosting',
+ 'verbose': False}
+
+### Running Genetic Algorithm
+Running Genetic Algorithm with params: {'classes_config': 'F0,F1,F2,F3XF4,HCC', 'model': 'gradient_boosting', 'balance_method': 'float_balanced', 'fold_type': 'kfold', 'metric': 'auc_roc', 'verbose': False, 'additional_metrics': False}
+Generation 1
+### Generation:1  avg_fit:0.4785 | max_fit:0.534
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.534 | Features:[0, 0, 0, 0, 1, 1, 0, 0, 0, 0]
+
+Generation 2
+### Generation:2  avg_fit:0.5009 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 3
+### Generation:3  avg_fit:0.515 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 4
+### Generation:4  avg_fit:0.5318 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 5
+### Generation:5  avg_fit:0.546 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 6
+### Generation:6  avg_fit:0.5465 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 7
+### Generation:7  avg_fit:0.5375 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 8
+### Generation:8  avg_fit:0.5451 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 9
+### Generation:9  avg_fit:0.5626 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 10
+### Generation:10  avg_fit:0.5576 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 11
+### Generation:11  avg_fit:0.5469 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 12
+### Generation:12  avg_fit:0.5397 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 13
+### Generation:13  avg_fit:0.5548 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 14
+### Generation:14  avg_fit:0.5461 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 15
+### Generation:15  avg_fit:0.5468 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 16
+### Generation:16  avg_fit:0.5534 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 17
+### Generation:17  avg_fit:0.5459 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 18
+### Generation:18  avg_fit:0.5608 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 19
+### Generation:19  avg_fit:0.5489 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 20
+### Generation:20  avg_fit:0.5593 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 21
+### Generation:21  avg_fit:0.5573 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 22
+### Generation:22  avg_fit:0.5434 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 23
+### Generation:23  avg_fit:0.5473 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 24
+### Generation:24  avg_fit:0.5616 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 25
+### Generation:25  avg_fit:0.556 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 26
+### Generation:26  avg_fit:0.5593 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 27
+### Generation:27  avg_fit:0.5527 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 28
+### Generation:28  avg_fit:0.5534 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 29
+### Generation:29  avg_fit:0.5633 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 30
+### Generation:30  avg_fit:0.5476 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 31
+### Generation:31  avg_fit:0.5576 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 32
+### Generation:32  avg_fit:0.5634 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+Generation 33
+### Population
+Index:0 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:1 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:2 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:3 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:4 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:5 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:6 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:7 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:8 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:9 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:10 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:11 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:12 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:13 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:14 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:15 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:16 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:17 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:18 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:19 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:20 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:21 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:22 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5772
+Index:23 Genes:[0, 0, 0, 0, 0, 0, 0, 0, 1, 0] Fitness:0.5535
+Index:24 Genes:[0, 0, 0, 0, 0, 0, 0, 1, 0, 0] Fitness:0.5472
+Index:25 Genes:[0, 1, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5109
+Index:26 Genes:[0, 1, 0, 0, 0, 0, 0, 1, 1, 0] Fitness:0.5109
+Index:27 Genes:[0, 1, 1, 0, 1, 0, 0, 0, 0, 0] Fitness:0.4731
+Index:28 Genes:[1, 1, 0, 0, 1, 0, 0, 1, 1, 0] Fitness:0.4435
+Index:29 Genes:[0, 0, 0, 1, 0, 0, 1, 1, 1, 1] Fitness:0.4425
+### Generation:33  avg_fit:0.5586 | max_fit:0.5772
+Best Indiv = Model:gradient_boosting Metric:auc_roc Score:0.5772 | Features:[0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+
+### Finished Running Genetic Algorithm
+Genetic Algorithm - Elapsed Time:00:02:34
+
+### Running Best Indiv simulation:
+Model:gradient_boosting 
+Features:['SOD2', 'MPO C-463T'] | [0, 0, 0, 0, 0, 0, 0, 1, 1, 0]
+Accuracy:0.569 (+-0.056)
+Balanced Accuracy:0.577 (+-0.033)
+AUC ROC:0.577 (+-0.033)
+Accumulated Confusion Matrix:
+[119, 33]
+[95, 50]
+Printed Confusion Matrix to file: reports/confusion-matrix-(29-10)21 49 08 559.png
+indiv parameters:{'classes_config': 'F0,F1,F2,F3XF4,HCC', 'model': 'gradient_boosting', 'balance_method': 'float_balanced', 'fold_type': 'kfold', 'metric': 'auc_roc', 'verbose': True, 'additional_metrics': True}
+Best Model Execution - Elapsed Time:00:00:00
+### Finished Best Indiv simulation:
+
+### Running Full Features model
+Model:gradient_boosting 
+Features:['PTX3 rs1840680', 'PTX3 rs2305619', 'MBL -221', 'IL-10 -1082', 'IL-10 -819', 'IL-10 -592', 'TNF-308', 'SOD2', 'MPO C-463T', 'IL-28b rs12979860'] | [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+Accuracy:0.535 (+-0.015)
+Balanced Accuracy:0.425 (+-0.030)
+AUC ROC:0.425 (+-0.030)
+Accumulated Confusion Matrix:
+[145, 69]
+[69, 14]
+Printed Confusion Matrix to file: reports/confusion-matrix-(29-10)21 49 09 23.png
+### Finished running Full Features model

@@ -1,2 +1,9 @@
 .vscode
 .git
+/env
+_pycache_
+/scripts/_pycache_/
+/scripts/genetic_algorithm/_pycache_/
+*.pyc
+*.pyo
+/genetic_algorithm/reports

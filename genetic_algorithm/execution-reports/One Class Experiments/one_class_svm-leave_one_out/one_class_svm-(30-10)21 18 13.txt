@@ -1,0 +1,207 @@
+File:reports/one_class_svm-(30-10)21 18 13.txt 
+ Parameters:
+{'additional_metrics': False,
+ 'balance_method': 'float_balanced',
+ 'classes_config': 'standard',
+ 'fold_type': 'leave_one_out',
+ 'metric': 'auc_roc',
+ 'model': 'one_class_svm',
+ 'verbose': False}
+
+### Running Genetic Algorithm
+Running Genetic Algorithm with params: {'classes_config': 'standard', 'model': 'one_class_svm', 'balance_method': 'float_balanced', 'fold_type': 'leave_one_out', 'metric': 'auc_roc', 'verbose': False, 'additional_metrics': False}
+Generation 1
+### Generation:1  avg_fit:0.4874 | max_fit:0.5405
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.5405 | Features:[1, 1, 1, 1, 1, 1, 0, 0, 1, 0]
+
+Generation 2
+### Generation:2  avg_fit:0.5072 | max_fit:0.5615
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.5615 | Features:[0, 0, 0, 0, 1, 1, 0, 1, 0, 0]
+
+Generation 3
+### Generation:3  avg_fit:0.5142 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 4
+### Generation:4  avg_fit:0.5369 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 5
+### Generation:5  avg_fit:0.5553 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 6
+### Generation:6  avg_fit:0.5789 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 7
+### Generation:7  avg_fit:0.5862 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 8
+### Generation:8  avg_fit:0.6322 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 9
+### Generation:9  avg_fit:0.6368 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 10
+### Generation:10  avg_fit:0.6466 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 11
+### Generation:11  avg_fit:0.6464 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 12
+### Generation:12  avg_fit:0.6208 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 13
+### Generation:13  avg_fit:0.6478 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 14
+### Generation:14  avg_fit:0.6173 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 15
+### Generation:15  avg_fit:0.6621 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 16
+### Generation:16  avg_fit:0.6452 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 17
+### Generation:17  avg_fit:0.6375 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 18
+### Generation:18  avg_fit:0.6223 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 19
+### Generation:19  avg_fit:0.6255 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 20
+### Generation:20  avg_fit:0.6505 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 21
+### Generation:21  avg_fit:0.6533 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 22
+### Generation:22  avg_fit:0.6464 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 23
+### Generation:23  avg_fit:0.6412 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 24
+### Generation:24  avg_fit:0.6342 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 25
+### Generation:25  avg_fit:0.6324 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 26
+### Generation:26  avg_fit:0.6285 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 27
+### Generation:27  avg_fit:0.6164 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 28
+### Generation:28  avg_fit:0.6352 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 29
+### Generation:29  avg_fit:0.6521 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 30
+### Generation:30  avg_fit:0.6322 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 31
+### Generation:31  avg_fit:0.6316 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 32
+### Generation:32  avg_fit:0.6222 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 33
+### Generation:33  avg_fit:0.629 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+Generation 34
+### Population
+Index:0 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:1 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:2 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:3 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:4 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:5 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:6 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:7 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:8 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:9 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:10 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:11 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:12 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:13 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:14 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:15 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:16 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:17 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:18 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:19 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:20 Genes:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0] Fitness:0.6878
+Index:21 Genes:[0, 0, 0, 1, 1, 1, 0, 0, 0, 0] Fitness:0.545
+Index:22 Genes:[0, 0, 0, 0, 1, 1, 0, 0, 1, 0] Fitness:0.5381
+Index:23 Genes:[0, 0, 0, 1, 0, 0, 1, 1, 0, 0] Fitness:0.5303
+Index:24 Genes:[0, 0, 0, 0, 0, 0, 1, 1, 1, 0] Fitness:0.5067
+Index:25 Genes:[1, 1, 0, 0, 0, 0, 0, 0, 0, 1] Fitness:0.4693
+Index:26 Genes:[0, 0, 1, 0, 1, 1, 0, 1, 0, 0] Fitness:0.4692
+Index:27 Genes:[1, 0, 1, 1, 1, 1, 1, 0, 1, 1] Fitness:0.4378
+Index:28 Genes:[1, 1, 0, 0, 0, 1, 1, 0, 1, 0] Fitness:0.4359
+Index:29 Genes:[1, 0, 1, 0, 1, 0, 0, 1, 1, 1] Fitness:0.4359
+### Generation:34  avg_fit:0.6271 | max_fit:0.6878
+Best Indiv = Model:one_class_svm Metric:auc_roc Score:0.6878 | Features:[0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+
+### Finished Running Genetic Algorithm
+Genetic Algorithm - Elapsed Time:00:21:17
+
+### Running Best Indiv simulation:
+Model:one_class_svm 
+Features:['IL-10 -1082', 'IL-10 -819'] | [0, 0, 0, 1, 1, 0, 0, 0, 0, 0]
+Accuracy:0.754 (+-0.000)
+Balanced Accuracy:0.688 (+-0.000)
+AUC ROC:0.688 (+-0.000)
+Accumulated Confusion Matrix:
+[199, 17]
+[56, 25]
+Printed Confusion Matrix to file: reports/confusion-matrix-(30-10)21 39 32 850.png
+indiv parameters:{'classes_config': 'standard', 'model': 'one_class_svm', 'balance_method': 'float_balanced', 'fold_type': 'leave_one_out', 'metric': 'auc_roc', 'verbose': True, 'additional_metrics': True}
+Best Model Execution - Elapsed Time:00:00:01
+### Finished Best Indiv simulation:
+
+### Running Full Features model
+Model:one_class_svm 
+Features:['PTX3 rs1840680', 'PTX3 rs2305619', 'MBL -221', 'IL-10 -1082', 'IL-10 -819', 'IL-10 -592', 'TNF-308', 'SOD2', 'MPO C-463T', 'IL-28b rs12979860'] | [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+Accuracy:0.468 (+-0.000)
+Balanced Accuracy:0.461 (+-0.000)
+AUC ROC:0.461 (+-0.000)
+Accumulated Confusion Matrix:
+[120, 23]
+[135, 19]
+Printed Confusion Matrix to file: reports/confusion-matrix-(30-10)21 39 35 198.png
+### Finished running Full Features model

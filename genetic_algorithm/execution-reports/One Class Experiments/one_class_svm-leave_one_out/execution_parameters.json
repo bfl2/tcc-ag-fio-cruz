@@ -1,0 +1,9 @@
+{
+    "classes_config":"standard",
+    "model":"one_class_svm",
+    "balance_method":"float_balanced",
+    "fold_type":"leave_one_out",
+    "metric":"auc_roc",
+    "verbose":false,
+    "additional_metrics":false
+ }
